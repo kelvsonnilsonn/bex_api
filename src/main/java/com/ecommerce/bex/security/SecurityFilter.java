@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
@@ -31,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if(login != null){
             User user = userRepository.findByUsername(login).orElseThrow(UserNotFoundException::new);
-            var authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+            var authorities = Collections.singleton(new SimpleGrantedAuthority(user.getRole().name()));
             var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
