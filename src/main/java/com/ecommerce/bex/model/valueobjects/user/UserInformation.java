@@ -5,6 +5,7 @@ import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Embeddable
 @NoArgsConstructor
@@ -31,5 +32,9 @@ public class UserInformation {
 
     public String getCpf(){
         return cpf.getCpf();
+    }
+
+    public String getPassword(){
+        return password.getPassword();
     }
 }
