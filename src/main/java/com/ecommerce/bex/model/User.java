@@ -44,4 +44,8 @@ public class User {
     public String getCpf(){
         return userInformation.getCpf();
     }
+
+    public String getPassword(){
+        return userInformation.getPassword();
+    }
 }
