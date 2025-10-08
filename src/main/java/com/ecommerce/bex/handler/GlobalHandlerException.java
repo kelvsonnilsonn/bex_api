@@ -3,6 +3,7 @@ package com.ecommerce.bex.handler;
 import com.ecommerce.bex.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -34,8 +35,8 @@ public class GlobalHandlerException {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
-    @ExceptionHandler(NotSellerException.class)
-    public ResponseEntity<String> handleInvalidCategory(NotSellerException e){
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleInvalidCategory(AccessDeniedException e){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sem permissão");
     }
 }
