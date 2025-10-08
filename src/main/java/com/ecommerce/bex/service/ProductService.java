@@ -4,10 +4,13 @@ import com.ecommerce.bex.dto.PageResponseDTO;
 import com.ecommerce.bex.dto.product.ProductCreateRequestDTO;
 import com.ecommerce.bex.dto.product.ProductResponseDTO;
 import com.ecommerce.bex.enums.ProductCategory;
+import com.ecommerce.bex.enums.UserRole;
 import com.ecommerce.bex.exception.InvalidCategoryException;
+import com.ecommerce.bex.exception.NotSellerException;
 import com.ecommerce.bex.exception.ProductNotFoundException;
 import com.ecommerce.bex.mapper.ProductMapper;
 import com.ecommerce.bex.model.Product;
+import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.model.valueobjects.product.ProductInformation;
 import com.ecommerce.bex.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +25,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final AuthenticationInformation authenticationInformation;
     private final ProductMapper productMapper;
 
     @Transactional
     public ProductResponseDTO create(ProductCreateRequestDTO dto){
+        User user = authenticationInformation.getAuthenticatedUser();
+        if(user.getRole() == UserRole.USER_ROLE){
+            throw new NotSellerException();
+        }
         ProductInformation productInformation = productMapper.toInformation(dto);
         ProductCategory category = selectCategory(dto.category());
         Product product = new Product(productInformation, category);
