@@ -4,6 +4,7 @@ import com.ecommerce.bex.dto.auth.AuthResponseDTO;
 import com.ecommerce.bex.dto.auth.LoginRequestDTO;
 import com.ecommerce.bex.dto.auth.RegisterRequestDTO;
 import com.ecommerce.bex.service.SecurityService;
+import com.ecommerce.bex.util.AppConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping(AppConstants.AUTH_BASE_PATH)
 public class AuthController {
 
     private final SecurityService securityService;
 
-    @PostMapping("/login")
+    @PostMapping(AppConstants.LOGIN_PATH)
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequestDTO dto){
         return ResponseEntity.ok(securityService.login(dto));
     }
 
-    @PostMapping("/register")
+    @PostMapping(AppConstants.REGISTER_PATH)
     public ResponseEntity<AuthResponseDTO> register(@RequestBody @Valid RegisterRequestDTO dto){
         return ResponseEntity.ok(securityService.register(dto));
     }
