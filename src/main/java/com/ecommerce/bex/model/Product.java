@@ -1,13 +1,11 @@
 package com.ecommerce.bex.model;
 
-import com.ecommerce.bex.enums.ProductStatus;
+import com.ecommerce.bex.enums.ProductCategory;
+import com.ecommerce.bex.model.valueobjects.product.ProductInformation;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,39 +16,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private ProductInformation productInformation;
 
-    @Setter
-    private ProductStatus status;
+    @Enumerated(EnumType.STRING)
+    private ProductCategory category;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime soldAt;
-    private LocalDateTime sentAt;
-    private LocalDateTime receivedAt;
-
-    @ManyToOne
-    @JoinColumn(name="owner_id")
-    public User owner;
-
-    public Product(String username){
-        this.username = username;
-        this.createdAt = LocalDateTime.now();
-        this.status = ProductStatus.CREATED;
-    }
-
-    public void nextStatus(){
-        this.status.nextStatus(this);
-    }
-
-    public void setSoldDate(){
-        this.soldAt = LocalDateTime.now();
-    }
-
-    public void setSentDate(){
-        this.sentAt = LocalDateTime.now();
-    }
-
-    public void setReceivedDate(){
-        this.receivedAt = LocalDateTime.now();
+    public Product(ProductInformation productInformation, ProductCategory category){
+        this.productInformation = productInformation;
+        this.category = category;
     }
 }
