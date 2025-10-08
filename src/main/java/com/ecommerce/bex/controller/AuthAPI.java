@@ -1,4 +1,4 @@
-package com.library.api.controller;
+package com.ecommerce.bex.controller;
 
 import com.ecommerce.bex.dto.auth.AuthResponseDTO;
 import com.ecommerce.bex.dto.auth.LoginRequestDTO;
