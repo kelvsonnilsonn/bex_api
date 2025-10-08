@@ -13,5 +13,5 @@ public class AppConstants {
     public static final String CATEGORY_SEARCH_PATH = "/category/{productCategory}";
 
     public static final String LOGIN_PATH = "/login";
-    public static final String REGISTER_PATH = "/login";
+    public static final String REGISTER_PATH = "/register";
 }
