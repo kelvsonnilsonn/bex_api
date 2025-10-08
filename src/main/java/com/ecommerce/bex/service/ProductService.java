@@ -25,15 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final AuthenticationInformation authenticationInformation;
     private final ProductMapper productMapper;
 
     @Transactional
     public ProductResponseDTO create(ProductCreateRequestDTO dto){
-        User user = authenticationInformation.getAuthenticatedUser();
-        if(user.getRole() == UserRole.USER_ROLE){
-            throw new NotSellerException();
-        }
         ProductInformation productInformation = productMapper.toInformation(dto);
         ProductCategory category = selectCategory(dto.category());
         Product product = new Product(productInformation, category);
