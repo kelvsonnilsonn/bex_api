@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(AppConstants.PRODUCT_BASE_PATH)
 @RequiredArgsConstructor
-@PreAuthorize("permitAll()")
+@PreAuthorize(AppConstants.PRE_AUTHORIZE_ALL_REQUISITION)
 public class ProductController implements ProductAPI {
 
     private final ProductService productService;
 
     @PostMapping
-    @PreAuthorize("hasRole('SELLER_ROLE') or hasRole('ADMIN_ROLE')")
+    @PreAuthorize(AppConstants.PRE_AUTHORIZE_SELLER_REQUISITION + " or " + AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
     public ResponseEntity<ProductResponseDTO> create(@RequestBody @Valid ProductCreateRequestDTO dto){
         ProductResponseDTO response = productService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
