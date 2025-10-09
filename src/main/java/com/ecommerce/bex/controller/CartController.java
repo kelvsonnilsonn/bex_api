@@ -21,7 +21,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping(AppConstants.ITEMS_SEARCH_PATH)
-    public ResponseEntity<String> addItem(@RequestBody CartAddRequestDTO dto){
+    public ResponseEntity<CartResponseDTO> addItem(@RequestBody CartAddRequestDTO dto){
         return ResponseEntity.ok(cartService.addItem(dto));
     }
 
