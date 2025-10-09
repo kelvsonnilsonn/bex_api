@@ -6,11 +6,10 @@ import com.ecommerce.bex.dto.cart.CartResponseDTO;
 import com.ecommerce.bex.dto.cart.ItemResponseDTO;
 import com.ecommerce.bex.exception.ProductNotFoundException;
 import com.ecommerce.bex.exception.UserNotFoundException;
+import com.ecommerce.bex.mapper.CartMapper;
 import com.ecommerce.bex.model.Cart;
-import com.ecommerce.bex.model.CartItem;
 import com.ecommerce.bex.model.Product;
 import com.ecommerce.bex.model.User;
-import com.ecommerce.bex.mapper.CartMapper;
 import com.ecommerce.bex.repository.CartRepository;
 import com.ecommerce.bex.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,13 +29,13 @@ public class CartService {
     private final CartMapper cartMapper;
 
     @Transactional
-    public String addItem(CartAddRequestDTO dto){
+    public CartResponseDTO addItem(CartAddRequestDTO dto){
         User user = authenticationInformation.getAuthenticatedUser();
         Cart cart = findCartEntity(user.getId());
         Product product = productRepository.findById(dto.productId()).orElseThrow(ProductNotFoundException::new);
         cart.addProduct(product, dto.qtd());
         cartRepository.save(cart);
-        return "adicionado";
+        return cartMapper.toResponse(cart);
     }
 
     public PageResponseDTO<CartResponseDTO> findAll(Pageable pageable){
