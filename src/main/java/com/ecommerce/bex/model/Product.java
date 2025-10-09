@@ -7,6 +7,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -24,5 +27,29 @@ public class Product {
     public Product(ProductInformation productInformation, ProductCategory category){
         this.productInformation = productInformation;
         this.category = category;
+    }
+
+    public BigDecimal getPrice(){
+        return productInformation.getPrice();
+    }
+
+    public Long getSellerId(){
+        return productInformation.getSellerId();
+    }
+
+    public String getProductName(){
+        return productInformation.getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(productInformation, product.productInformation) && category == product.category;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productInformation, category);
     }
 }
