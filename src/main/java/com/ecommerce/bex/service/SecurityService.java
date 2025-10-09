@@ -6,8 +6,10 @@ import com.ecommerce.bex.dto.auth.RegisterRequestDTO;
 import com.ecommerce.bex.exception.FailedLoginAttemptException;
 import com.ecommerce.bex.exception.UserAlreadyExistsException;
 import com.ecommerce.bex.mapper.UserMapper;
+import com.ecommerce.bex.model.Cart;
 import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.model.valueobjects.user.*;
+import com.ecommerce.bex.repository.CartRepository;
 import com.ecommerce.bex.repository.UserRepository;
 import com.ecommerce.bex.security.TokenService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.Optional;
 public class SecurityService {
 
     private final UserRepository userRepository;
+    private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final TokenService tokenService;
@@ -44,7 +47,9 @@ public class SecurityService {
         }
         UserInformation userInformation = userMapper.toInformation(dto, passwordEncoder);
         User userToSave = new User(userInformation);
-        userRepository.save(userToSave);
+        User savedUser = userRepository.save(userToSave);
+        Cart cart = new Cart(savedUser);
+        cartRepository.save(cart);
         String token = tokenService.generateToken(userToSave);
         return new AuthResponseDTO(token, userToSave.getUsername());
     }
