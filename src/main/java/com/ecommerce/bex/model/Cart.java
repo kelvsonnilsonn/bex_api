@@ -55,4 +55,8 @@ public class Cart {
         }
         return amount;
     }
+
+    public void clearCart(){
+        this.items.clear();
+    }
 }
