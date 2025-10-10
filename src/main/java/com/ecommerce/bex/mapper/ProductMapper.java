@@ -3,7 +3,7 @@ package com.ecommerce.bex.mapper;
 import com.ecommerce.bex.dto.product.ProductCreateRequestDTO;
 import com.ecommerce.bex.dto.product.ProductResponseDTO;
 import com.ecommerce.bex.model.Product;
-import com.ecommerce.bex.model.valueobjects.product.ProductInformation;
+import com.ecommerce.bex.model.ProductInformation;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
