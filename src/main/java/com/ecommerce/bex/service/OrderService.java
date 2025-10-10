@@ -35,6 +35,7 @@ public class OrderService {
         Order order = new Order(user.getId(), cart.getItems());
         setOrderAddress(user.getAddress(), order);
         Order savedOrder = orderRepository.save(order);
+        cart.clearCart();
         for(CartItem item : cart.getItems()){
             productService.decreaseStock(item.getProduct(), item.getQuantity());
         }
