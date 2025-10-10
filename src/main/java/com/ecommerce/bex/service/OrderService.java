@@ -6,6 +6,7 @@ import com.ecommerce.bex.exception.CartNotFoundException;
 import com.ecommerce.bex.exception.UserNotFoundException;
 import com.ecommerce.bex.mapper.OrderMapper;
 import com.ecommerce.bex.model.Cart;
+import com.ecommerce.bex.model.CartItem;
 import com.ecommerce.bex.model.Order;
 import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.model.valueobjects.user.Address;
@@ -24,6 +25,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
     private final OrderMapper orderMapper;
+    private final ProductService productService;
     private final AuthenticationInformation authenticationInformation;
 
     @Transactional
@@ -33,6 +35,9 @@ public class OrderService {
         Order order = new Order(user.getId(), cart.getItems());
         setOrderAddress(user.getAddress(), order);
         Order savedOrder = orderRepository.save(order);
+        for(CartItem item : cart.getItems()){
+            productService.decreaseStock(item.getProduct(), item.getQuantity());
+        }
         return orderMapper.toResponse(savedOrder);
     }
 
