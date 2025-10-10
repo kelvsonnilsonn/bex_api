@@ -1,7 +1,6 @@
 package com.ecommerce.bex.model;
 
 import com.ecommerce.bex.enums.ProductCategory;
-import com.ecommerce.bex.model.valueobjects.product.ProductInformation;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -39,6 +38,10 @@ public class Product {
 
     public String getProductName(){
         return productInformation.getName();
+    }
+
+    public void decreaseStock(int quantity){
+        this.productInformation.setStock(productInformation.getStock() - quantity);
     }
 
     @Override
