@@ -9,11 +9,14 @@ public class AppConstants {
     public static final String AUTH_BASE_PATH = "/auth";
     public static final String PRODUCT_BASE_PATH = "/product";
     public static final String CART_BASE_PATH = "/cart";
+    public static final String ORDER_BASE_PATH = "/order";
 
     public static final String ID_PATH = "/{id}";
     public static final String CATEGORY_SEARCH_PATH = "/category/{productCategory}";
     public static final String ITEMS_SEARCH_PATH = "/items";
-    public static final String ALL_CARTS_SEARCH_PATH = "/all";
+    public static final String ALL_DATA_SEARCH_PATH = "/all";
+
+    public static final String UPDATE_STATUS_PATH = "/upstatus";
 
     public static final String LOGIN_PATH = "/login";
     public static final String REGISTER_PATH = "/register";
