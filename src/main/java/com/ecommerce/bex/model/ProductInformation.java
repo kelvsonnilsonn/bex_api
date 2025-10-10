@@ -1,4 +1,4 @@
-package com.ecommerce.bex.model.valueobjects.product;
+package com.ecommerce.bex.model;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
