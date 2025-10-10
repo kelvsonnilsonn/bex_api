@@ -21,7 +21,7 @@ public class AppConstants {
     public static final String LOGIN_PATH = "/login";
     public static final String REGISTER_PATH = "/register";
 
-    public static final String PRE_AUTHORIZE_ADMIN_REQUISITION = "hasRole('ADMIN_ROLE')";
+    public static final String PRE_AUTHORIZE_ADMIN_REQUISITION = "hasAuthority('ADMIN_ROLE')";
     public static final String PRE_AUTHORIZE_ALL_REQUISITION = "permitAll()";
-    public static final String PRE_AUTHORIZE_SELLER_REQUISITION = "hasRole('SELLER_ROLE')";
+    public static final String PRE_AUTHORIZE_SELLER_REQUISITION = "hasAuthority('SELLER_ROLE')";
 }
