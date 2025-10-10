@@ -39,4 +39,14 @@ public class GlobalHandlerException {
     public ResponseEntity<String> handleInvalidCategory(AccessDeniedException e){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sem permissão");
     }
+
+    @ExceptionHandler(CartNotFoundException.class)
+    public ResponseEntity<String> handleCartNotFound(CartNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(ProductAlreadyReceivedException.class)
+    public ResponseEntity<String> handleProductAlreadyReceived(ProductAlreadyReceivedException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
 }
