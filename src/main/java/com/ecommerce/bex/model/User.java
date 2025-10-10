@@ -1,6 +1,7 @@
 package com.ecommerce.bex.model;
 
 import com.ecommerce.bex.enums.UserRole;
+import com.ecommerce.bex.model.valueobjects.user.Address;
 import com.ecommerce.bex.model.valueobjects.user.UserInformation;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -47,5 +48,9 @@ public class User {
 
     public String getPassword(){
         return userInformation.getPassword();
+    }
+
+    public Address getAddress() {
+        return userInformation.getAddress();
     }
 }
