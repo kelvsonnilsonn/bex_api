@@ -3,6 +3,7 @@ package com.ecommerce.bex.dto;
 import com.ecommerce.bex.dto.cart.CartResponseDTO;
 import com.ecommerce.bex.enums.OrderStatus;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public record OrderResponseDTO(
@@ -15,6 +16,7 @@ public record OrderResponseDTO(
         String country,
         int number,
         String zipcode,
+        BigDecimal totalPrice,
         OrderStatus status
 ) {
 }
