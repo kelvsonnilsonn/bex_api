@@ -15,7 +15,7 @@ public class HttpConstants {
     public static final String SERVER_ERROR = "500";
 
     public static final String UNAUTHORIZED_MSG = "Sem permissão";
-    public static final String BAD_REQUEST_MSG = "Informações inseridas inválidas.";
+    public static final String BAD_REQUEST_MSG = "Dados inválidos fornecidos na requisição";
     public static final String INTERN_SERVER_ERROR_MSG = "Erro interno do servidor";
     public static final String NOT_FOUND_MSG = "Informação não encontrada";
     public static final String NO_CONTENT_MSG = "Não há conteúdo a ser mostrado";
