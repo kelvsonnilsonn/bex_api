@@ -7,14 +7,17 @@ import com.ecommerce.bex.enums.ProductCategory;
 import com.ecommerce.bex.exception.InvalidCategoryException;
 import com.ecommerce.bex.exception.ProductNotFoundException;
 import com.ecommerce.bex.mapper.ProductMapper;
+import com.ecommerce.bex.model.CartItem;
 import com.ecommerce.bex.model.Product;
-import com.ecommerce.bex.model.valueobjects.product.ProductInformation;
+import com.ecommerce.bex.model.ProductInformation;
 import com.ecommerce.bex.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +50,11 @@ public class ProductService {
         ProductCategory selectedCategory = selectCategory(category);
         Page<ProductResponseDTO> products = productRepository.findByCategory(pageable, selectedCategory).map(productMapper::toResponse);
         return PageResponseDTO.fromPage(products);
+    }
+
+    public void decreaseStock(Product product, int quantity){
+        product.decreaseStock(quantity);
+        productRepository.save(product);
     }
 
     private ProductCategory selectCategory(String category) {
