@@ -30,7 +30,7 @@ public class CartController {
         return ResponseEntity.ok(cartService.findMyProducts(pageable));
     }
 
-    @GetMapping(AppConstants.ALL_CARTS_SEARCH_PATH)
+    @GetMapping(AppConstants.ALL_DATA_SEARCH_PATH)
     @PreAuthorize(AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
     public ResponseEntity<PageResponseDTO<CartResponseDTO>> findAll(Pageable pageable){
         return ResponseEntity.ok(cartService.findAll(pageable));
