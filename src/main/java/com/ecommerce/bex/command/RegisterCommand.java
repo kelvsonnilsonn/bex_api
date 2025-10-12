@@ -1,6 +1,6 @@
-package com.ecommerce.bex.dto.auth;
+package com.ecommerce.bex.command;
 
-public record RegisterRequestDTO(
+public record RegisterCommand(
         String username,
         String password,
         String email,
