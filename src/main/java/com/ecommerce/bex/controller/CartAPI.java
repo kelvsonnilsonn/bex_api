@@ -1,9 +1,9 @@
 package com.ecommerce.bex.controller;
 
+import com.ecommerce.bex.command.cart.AddItemToCartCommand;
 import com.ecommerce.bex.dto.PageResponseDTO;
-import com.ecommerce.bex.dto.cart.CartAddRequestDTO;
-import com.ecommerce.bex.dto.cart.CartResponseDTO;
-import com.ecommerce.bex.dto.cart.ItemResponseDTO;
+import com.ecommerce.bex.dto.CartResponseDTO;
+import com.ecommerce.bex.dto.ItemResponseDTO;
 import com.ecommerce.bex.util.HttpConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,7 +20,7 @@ public interface CartAPI {
     @ApiResponse(responseCode = HttpConstants.CREATED, description = "Item adicionado ao carrinho com sucesso")
     @ApiResponse(responseCode = HttpConstants.BAD_REQUEST, description = HttpConstants.BAD_REQUEST_MSG)
     @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<String> addItem(@RequestBody CartAddRequestDTO dto);
+    ResponseEntity<Void> addItem(@RequestBody AddItemToCartCommand command);
 
     @Operation(summary = "Listar itens do meu carrinho", description = "Endpoint para listar todos os itens do carrinho do usuário autenticado")
     @ApiResponse(responseCode = HttpConstants.OK, description = "Itens listados com sucesso")

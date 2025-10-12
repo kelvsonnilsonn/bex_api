@@ -18,7 +18,7 @@ public interface OrderAPI {
     @ApiResponse(responseCode = HttpConstants.BAD_REQUEST, description = HttpConstants.BAD_REQUEST_MSG)
     @ApiResponse(responseCode = HttpConstants.NOT_FOUND, description = HttpConstants.NOT_FOUND_MSG)
     @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<OrderResponseDTO> order();
+    ResponseEntity<Long> order();
 
     @Operation(summary = "Listar meus pedidos", description = "Endpoint para listar todos os pedidos do usuário autenticado")
     @ApiResponse(responseCode = HttpConstants.OK, description = "Pedidos listados com sucesso")

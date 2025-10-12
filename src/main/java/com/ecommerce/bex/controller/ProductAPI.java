@@ -1,8 +1,8 @@
 package com.ecommerce.bex.controller;
 
+import com.ecommerce.bex.command.product.CreateProductCommand;
 import com.ecommerce.bex.dto.PageResponseDTO;
-import com.ecommerce.bex.dto.product.ProductCreateRequestDTO;
-import com.ecommerce.bex.dto.product.ProductResponseDTO;
+import com.ecommerce.bex.dto.ProductResponseDTO;
 import com.ecommerce.bex.util.HttpConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,7 +20,7 @@ public interface ProductAPI {
     @ApiResponse(responseCode = HttpConstants.CREATED, description = "Produto criado com sucesso")
     @ApiResponse(responseCode = HttpConstants.BAD_REQUEST, description = HttpConstants.BAD_REQUEST_MSG)
     @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<ProductResponseDTO> create(@RequestBody @Valid ProductCreateRequestDTO dto);
+    ResponseEntity<Long> create(@RequestBody @Valid CreateProductCommand dto);
 
     @Operation(summary = "Listar todos os produtos", description = "Retorna uma lista paginada de todos os produtos cadastrados no sistema")
     @ApiResponse(responseCode = HttpConstants.OK, description = "Lista de produtos retornada com sucesso")
