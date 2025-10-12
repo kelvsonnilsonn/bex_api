@@ -5,7 +5,6 @@ import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Embeddable
 @NoArgsConstructor
@@ -23,6 +22,7 @@ public class UserInformation {
     @Embedded
     private CPF cpf;
 
+    @Getter
     @Embedded
     private Address address;
 
