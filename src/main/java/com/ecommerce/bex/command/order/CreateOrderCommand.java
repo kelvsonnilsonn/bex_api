@@ -1,0 +1,4 @@
+package com.ecommerce.bex.command.order;
+
+public record CreateOrderCommand() {
+}
