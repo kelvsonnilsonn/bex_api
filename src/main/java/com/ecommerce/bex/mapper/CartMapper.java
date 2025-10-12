@@ -1,7 +1,7 @@
 package com.ecommerce.bex.mapper;
 
-import com.ecommerce.bex.dto.cart.CartResponseDTO;
-import com.ecommerce.bex.dto.cart.ItemResponseDTO;
+import com.ecommerce.bex.dto.CartResponseDTO;
+import com.ecommerce.bex.dto.ItemResponseDTO;
 import com.ecommerce.bex.model.Cart;
 import com.ecommerce.bex.model.CartItem;
 import org.mapstruct.Mapper;

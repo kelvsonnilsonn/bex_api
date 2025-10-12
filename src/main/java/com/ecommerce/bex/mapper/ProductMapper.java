@@ -1,7 +1,7 @@
 package com.ecommerce.bex.mapper;
 
-import com.ecommerce.bex.dto.product.ProductCreateRequestDTO;
-import com.ecommerce.bex.dto.product.ProductResponseDTO;
+import com.ecommerce.bex.command.product.CreateProductCommand;
+import com.ecommerce.bex.dto.ProductResponseDTO;
 import com.ecommerce.bex.model.Product;
 import com.ecommerce.bex.model.ProductInformation;
 import org.mapstruct.Mapper;
@@ -18,5 +18,5 @@ public interface ProductMapper {
     @Mapping(target = "sellerId", source = "productInformation.sellerId")
     ProductResponseDTO toResponse(Product product);
 
-    ProductInformation toInformation(ProductCreateRequestDTO dto);
+    ProductInformation toInformation(CreateProductCommand command);
 }

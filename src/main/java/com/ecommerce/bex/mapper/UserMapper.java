@@ -1,6 +1,6 @@
 package com.ecommerce.bex.mapper;
 
-import com.ecommerce.bex.dto.auth.RegisterRequestDTO;
+import com.ecommerce.bex.command.RegisterCommand;
 import com.ecommerce.bex.model.valueobjects.user.*;
 import org.mapstruct.Mapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    default UserInformation toInformation(RegisterRequestDTO dto, PasswordEncoder passwordEncoder) {
+    default UserInformation toInformation(RegisterCommand dto, PasswordEncoder passwordEncoder) {
         Password password = Password.of(dto.password(), passwordEncoder);
         Email email = new Email(dto.email());
         CPF cpf = new CPF(dto.cpf());
