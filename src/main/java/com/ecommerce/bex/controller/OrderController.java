@@ -52,5 +52,4 @@ public class OrderController {
         commandService.updateOrderStatus(command);
         return ResponseEntity.ok().build();
     }
-
 }

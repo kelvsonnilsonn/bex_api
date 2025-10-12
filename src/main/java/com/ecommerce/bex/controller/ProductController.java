@@ -1,9 +1,10 @@
 package com.ecommerce.bex.controller;
 
+import com.ecommerce.bex.command.product.CreateProductCommand;
 import com.ecommerce.bex.dto.PageResponseDTO;
-import com.ecommerce.bex.dto.product.ProductCreateRequestDTO;
-import com.ecommerce.bex.dto.product.ProductResponseDTO;
-import com.ecommerce.bex.service.ProductService;
+import com.ecommerce.bex.dto.ProductResponseDTO;
+import com.ecommerce.bex.service.command.ProductCommandService;
+import com.ecommerce.bex.service.query.ProductQueryService;
 import com.ecommerce.bex.util.AppConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,27 +20,28 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize(AppConstants.PRE_AUTHORIZE_ALL_REQUISITION)
 public class ProductController implements ProductAPI {
 
-    private final ProductService productService;
+    private final ProductCommandService commandService;
+    private final ProductQueryService queryService;
 
     @PostMapping
     @PreAuthorize(AppConstants.PRE_AUTHORIZE_SELLER_REQUISITION + " or " + AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
-    public ResponseEntity<ProductResponseDTO> create(@RequestBody @Valid ProductCreateRequestDTO dto){
-        ProductResponseDTO response = productService.create(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<Long> create(@RequestBody @Valid CreateProductCommand command){
+        Long productId = commandService.create(command);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productId);
     }
 
     @GetMapping(value = {"", "/"})
     public ResponseEntity<PageResponseDTO<ProductResponseDTO>> findAll(Pageable pageable){
-        return ResponseEntity.ok(productService.findAll(pageable));
+        return ResponseEntity.ok(queryService.findAll(pageable));
     }
 
     @GetMapping(AppConstants.ID_PATH)
     public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id){
-        return ResponseEntity.ok(productService.findById(id));
+        return ResponseEntity.ok(queryService.findById(id));
     }
 
     @GetMapping(AppConstants.CATEGORY_SEARCH_PATH)
     public ResponseEntity<PageResponseDTO<ProductResponseDTO>> findByCategory(Pageable pageable, @PathVariable String productCategory){
-        return ResponseEntity.ok(productService.findByCategory(pageable, productCategory));
+        return ResponseEntity.ok(queryService.findByCategory(pageable, productCategory));
     }
 }

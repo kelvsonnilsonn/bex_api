@@ -1,11 +1,13 @@
 package com.ecommerce.bex.controller;
 
+import com.ecommerce.bex.command.cart.AddItemToCartCommand;
 import com.ecommerce.bex.dto.PageResponseDTO;
-import com.ecommerce.bex.dto.cart.CartAddRequestDTO;
-import com.ecommerce.bex.dto.cart.CartResponseDTO;
-import com.ecommerce.bex.dto.cart.ItemResponseDTO;
-import com.ecommerce.bex.service.CartService;
+import com.ecommerce.bex.dto.CartResponseDTO;
+import com.ecommerce.bex.dto.ItemResponseDTO;
+import com.ecommerce.bex.service.command.CartCommandService;
+import com.ecommerce.bex.service.query.CartQueryService;
 import com.ecommerce.bex.util.AppConstants;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -18,27 +20,29 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize(AppConstants.PRE_AUTHORIZE_ALL_REQUISITION)
 public class CartController {
 
-    private final CartService cartService;
+    private final CartCommandService commandService;
+    private final CartQueryService queryService;
 
     @PostMapping(AppConstants.ITEMS_SEARCH_PATH)
-    public ResponseEntity<CartResponseDTO> addItem(@RequestBody CartAddRequestDTO dto){
-        return ResponseEntity.ok(cartService.addItem(dto));
+    public ResponseEntity<Void> addItem(@RequestBody @Valid AddItemToCartCommand command){
+        commandService.addItemToCart(command);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value={"", "/"})
     public ResponseEntity<PageResponseDTO<ItemResponseDTO>> findAllMyCartItems(Pageable pageable){
-        return ResponseEntity.ok(cartService.findMyProducts(pageable));
+        return ResponseEntity.ok(queryService.findMyProducts(pageable));
     }
 
     @GetMapping(AppConstants.ALL_DATA_SEARCH_PATH)
     @PreAuthorize(AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
     public ResponseEntity<PageResponseDTO<CartResponseDTO>> findAll(Pageable pageable){
-        return ResponseEntity.ok(cartService.findAll(pageable));
+        return ResponseEntity.ok(queryService.findAll(pageable));
     }
 
     @GetMapping(AppConstants.ID_PATH)
     @PreAuthorize(AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
     public ResponseEntity<PageResponseDTO<ItemResponseDTO>> findCartProducts(Pageable pageable, @PathVariable Long id){
-        return ResponseEntity.ok(cartService.findCartProducts(pageable, id));
+        return ResponseEntity.ok(queryService.findCartProducts(pageable, id));
     }
 }
