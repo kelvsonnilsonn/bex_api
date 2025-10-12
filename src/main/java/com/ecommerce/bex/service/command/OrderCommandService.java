@@ -1,8 +1,9 @@
-package com.ecommerce.bex.service;
+package com.ecommerce.bex.service.command;
 
-import com.ecommerce.bex.dto.OrderResponseDTO;
-import com.ecommerce.bex.dto.PageResponseDTO;
-import com.ecommerce.bex.exception.CartNotFoundException;
+import com.ecommerce.bex.command.order.CreateOrderCommand;
+import com.ecommerce.bex.command.order.UpdateOrderStatusCommand;
+import com.ecommerce.bex.command.product.DecreaseStockCommand;
+import com.ecommerce.bex.exception.EmptyCartException;
 import com.ecommerce.bex.exception.UserNotFoundException;
 import com.ecommerce.bex.mapper.OrderMapper;
 import com.ecommerce.bex.model.Cart;
@@ -12,58 +13,46 @@ import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.model.valueobjects.user.Address;
 import com.ecommerce.bex.repository.CartRepository;
 import com.ecommerce.bex.repository.OrderRepository;
+import com.ecommerce.bex.service.AuthenticationInformation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
+@Transactional
+public class OrderCommandService {
 
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
-    private final OrderMapper orderMapper;
-    private final ProductService productService;
+    private final ProductCommandService commandService;
     private final AuthenticationInformation authenticationInformation;
 
-    @Transactional
-    public OrderResponseDTO order(){
+    public Long create(CreateOrderCommand command){
         User user = authenticationInformation.getAuthenticatedUser();
         Cart cart = cartRepository.findByUserId(user.getId()).orElseThrow(UserNotFoundException::new);
+
+        if(cart.getItems().isEmpty()){
+            throw new EmptyCartException();
+        }
+
         Order order = new Order(user.getId(), cart.getItems());
         setOrderAddress(user.getAddress(), order);
         Order savedOrder = orderRepository.save(order);
+
         cart.clearCart();
+        cartRepository.save(cart);
+
         for(CartItem item : cart.getItems()){
-            productService.decreaseStock(item.getProduct(), item.getQuantity());
+            commandService.decreaseStock(new DecreaseStockCommand(item.getProductId(), item.getQuantity()));
         }
-        return orderMapper.toResponse(savedOrder);
+        return savedOrder.getId();
     }
 
-    public OrderResponseDTO findById(Long id){
-        Order order = orderRepository.findById(id).orElseThrow(CartNotFoundException::new);
-        return orderMapper.toResponse(order);
-    }
-
-    public PageResponseDTO<OrderResponseDTO> findAll(Pageable pageable){
-        Page<OrderResponseDTO> orders = orderRepository.findAll(pageable).map(orderMapper::toResponse);
-        return PageResponseDTO.fromPage(orders);
-    }
-
-    public PageResponseDTO<OrderResponseDTO> findMyOrder(Pageable pageable){
-        Long userId = authenticationInformation.getAuthenticatedUser().getId();
-        Page<OrderResponseDTO> orders = orderRepository.findByUserId(pageable, userId).map(orderMapper::toResponse);
-        return PageResponseDTO.fromPage(orders);
-    }
-
-    @Transactional
-    public OrderResponseDTO setOrderNextStatus(Long id){
-        Order order = orderRepository.findById(id).orElseThrow();
+    public void updateOrderStatus(UpdateOrderStatusCommand command){
+        Order order = orderRepository.findById(command.id()).orElseThrow();
         order.nextStatus();
         Order updatedOrder = orderRepository.save(order);
-        return orderMapper.toResponse(updatedOrder);
     }
 
     private void setOrderAddress(Address address, Order order){
