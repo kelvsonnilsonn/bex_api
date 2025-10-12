@@ -1,8 +1,8 @@
 package com.ecommerce.bex.service;
 
-import com.ecommerce.bex.dto.auth.AuthResponseDTO;
-import com.ecommerce.bex.dto.auth.LoginRequestDTO;
-import com.ecommerce.bex.dto.auth.RegisterRequestDTO;
+import com.ecommerce.bex.dto.AuthResponseDTO;
+import com.ecommerce.bex.command.LoginCommand;
+import com.ecommerce.bex.command.RegisterCommand;
 import com.ecommerce.bex.exception.FailedLoginAttemptException;
 import com.ecommerce.bex.exception.UserAlreadyExistsException;
 import com.ecommerce.bex.mapper.UserMapper;
@@ -30,7 +30,7 @@ public class SecurityService {
     private final TokenService tokenService;
 
     @Transactional(readOnly = true)
-    public AuthResponseDTO login(LoginRequestDTO dto){
+    public AuthResponseDTO login(LoginCommand dto){
         User user = userRepository.findByUsername(dto.username()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         if(!(passwordEncoder.matches(dto.password(), user.getPassword()))){
             throw new FailedLoginAttemptException();
@@ -40,7 +40,7 @@ public class SecurityService {
     }
 
     @Transactional
-    public AuthResponseDTO register(RegisterRequestDTO dto){
+    public AuthResponseDTO register(RegisterCommand dto){
         Optional<User> user = userRepository.findByUsername(dto.username());
         if(user.isPresent()){
             throw new UserAlreadyExistsException();
