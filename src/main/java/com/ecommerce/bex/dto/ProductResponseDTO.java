@@ -1,4 +1,4 @@
-package com.ecommerce.bex.dto.product;
+package com.ecommerce.bex.dto;
 
 import java.math.BigDecimal;
 
