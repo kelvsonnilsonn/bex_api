@@ -1,5 +1,7 @@
 package com.ecommerce.bex.enums;
 
+import com.ecommerce.bex.exception.InvalidCategoryException;
+
 public enum ProductCategory {
     ELETRONICOS,
     ELETRODOMESTICOS,
@@ -18,5 +20,13 @@ public enum ProductCategory {
     SUPERMERCADO,
     JOGOS,
     MUSICA,
-    FILMES
+    FILMES;
+
+    public static ProductCategory fromString(String category) {
+        try {
+            return ProductCategory.valueOf(category.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidCategoryException();
+        }
+    }
 }
