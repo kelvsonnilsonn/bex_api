@@ -40,6 +40,22 @@ public class Product {
         return productInformation.getName();
     }
 
+    public int getStock(){
+        return productInformation.getStock();
+    }
+
+    public void changeProductName(String newName){
+        productInformation.setName(newName);
+    }
+
+    public void changeProductPrice(BigDecimal newPrice){
+        productInformation.setPrice(newPrice);
+    }
+
+    public void changeProductStock(int newStock){
+        productInformation.setStock(newStock);
+    }
+
     public void decreaseStock(int quantity){
         this.productInformation.setStock(productInformation.getStock() - quantity);
     }
