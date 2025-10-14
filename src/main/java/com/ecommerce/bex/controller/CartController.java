@@ -23,7 +23,6 @@ public class CartController {
     private final CartCommandService commandService;
     private final CartQueryService queryService;
 
-    @PostMapping(AppConstants.ITEMS_SEARCH_PATH)
     public ResponseEntity<Void> addItem(@RequestBody @Valid AddItemToCartCommand command){
         commandService.addItemToCart(command);
         return ResponseEntity.ok().build();
