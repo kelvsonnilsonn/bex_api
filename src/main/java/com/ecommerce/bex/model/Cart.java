@@ -1,5 +1,6 @@
 package com.ecommerce.bex.model;
 
+import com.ecommerce.bex.exception.ProductNotInCartException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -46,6 +48,13 @@ public class Cart {
             this.items.add(new CartItem(product, qtd, this));
         }
         this.total = calculateTotal();
+    }
+
+    public void removeProduct(Long productId){
+        CartItem itemToRemove = items.stream()
+                .filter(i -> Objects.equals(i.getProduct().getId(), productId))
+                .findFirst().orElseThrow(ProductNotInCartException::new);
+        items.remove(itemToRemove);
     }
 
     public BigDecimal calculateTotal(){
