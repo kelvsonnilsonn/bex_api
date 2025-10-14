@@ -1,6 +1,5 @@
 package com.ecommerce.bex.controller;
 
-import com.ecommerce.bex.command.order.CreateOrderCommand;
 import com.ecommerce.bex.command.order.UpdateOrderStatusCommand;
 import com.ecommerce.bex.dto.OrderResponseDTO;
 import com.ecommerce.bex.dto.PageResponseDTO;
@@ -24,8 +23,8 @@ public class OrderController {
     private final OrderQueryService queryService;
 
     @PostMapping
-    public ResponseEntity<Long> order(@RequestBody CreateOrderCommand command){
-        Long orderId = commandService.create(command);
+    public ResponseEntity<Long> order(){
+        Long orderId = commandService.create();
         return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
     }
 
