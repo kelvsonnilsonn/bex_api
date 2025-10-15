@@ -2,6 +2,7 @@ package com.ecommerce.bex.dto;
 
 import com.ecommerce.bex.enums.OrderStatus;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -17,5 +18,5 @@ public record OrderResponseDTO(
         String zipcode,
         BigDecimal totalPrice,
         OrderStatus status
-) {
+) implements Serializable {
 }

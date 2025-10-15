@@ -1,5 +1,6 @@
 package com.ecommerce.bex.dto;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 public record OrderItemResponseDTO(
@@ -8,5 +9,5 @@ public record OrderItemResponseDTO(
         int quantity,
         BigDecimal unitPrice,
         BigDecimal totalPrice
-) {
+) implements Serializable {
 }
