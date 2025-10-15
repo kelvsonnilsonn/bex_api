@@ -9,6 +9,7 @@ Uma plataforma de e-commerce moderna desenvolvida em Java com Spring Boot, imple
 ### Padrões Arquiteturais Implementados
 - **CQRS (Command Query Responsibility Segregation)**: Separação clara entre operações de escrita (Commands) e leitura (Queries)
 - **Event Sourcing**: Todos os estados importantes são persistidos como sequência imutável de eventos
+- **Redis Cache**: Cache estratégico para otimização de performance
 - **Domain-Driven Design (DDD)**: Modelagem baseada em domínios ricos com Value Objects
 - **Clean Architecture**: Separação em camadas bem definidas
 
@@ -47,6 +48,7 @@ src/main/java/com/ecommerce/bex/
 - ✅ Spring Security integrado com endpoints protegidos
 
 ### 🛍️ Gestão de Produtos
+- ✅ Cache Redis para produtos individuais e por categoria
 - ✅ CRUD completo de produtos
 - ✅ Categorização de produtos (15 categorias disponíveis)
 - ✅ Controle de estoque com decremento automático
@@ -54,6 +56,7 @@ src/main/java/com/ecommerce/bex/
 - ✅ Busca por categoria e ID
 
 ### 🛒 Carrinho de Compras
+- ✅ Cache Redis para carrinho do usuário
 - ✅ Adicionar/remover itens do carrinho
 - ✅ Cálculo automático de totais
 - ✅ Carrinho persistido por usuário
@@ -61,6 +64,7 @@ src/main/java/com/ecommerce/bex/
 - ✅ Validação de estoque
 
 ### 📦 Sistema de Pedidos
+- ✅ Cache Redis para pedidos individuais e listas
 - ✅ Criação de pedidos a partir do carrinho
 - ✅ Fluxo de status (PENDING → PAID → SENT → RECEIVED)
 - ✅ Endereço de entrega automático do usuário
@@ -83,6 +87,7 @@ src/main/java/com/ecommerce/bex/
 - **Spring Security 6** - Autenticação e autorização
 - **JPA/Hibernate** - ORM e persistência
 - **PostgreSQL** - Banco de dados principal
+- **Redis** - Cache em memória
 - **JWT** - Tokens de autenticação
 - **MapStruct** - Mapeamento entre objetos
 - **Lombok** - Redução de boilerplate
@@ -271,6 +276,7 @@ Este é o fluxo de alto nível para a criação e processamento de um pedido, co
 - Java 21
 - Maven 3.6+
 - PostgreSQL 14+
+- Redis (Docker ou instalado localmente)
 
 ### Configuração da Aplicação
 Edite `application.properties`:
@@ -279,6 +285,13 @@ Edite `application.properties`:
 spring.datasource.url=jdbc:postgresql://localhost:5432/bexdb
 spring.datasource.username=seu_usuario
 spring.datasource.password=sua_senha
+
+# Redis Cache
+spring.cache.type=redis
+spring.redis.host=localhost
+spring.redis.port=6379
+spring.cache.redis.time-to-live=3600000
+
 api.security.token.secret=sua-chave-secreta-jwt
 ```
 
@@ -289,6 +302,9 @@ git clone [url-do-repositorio]
 
 # Navegue até o diretório
 cd bex
+
+# Iniciar Redis
+docker run -d -p 6379:6379 --name bex-redis redis:7-alpine
 
 # Execute a aplicação
 mvn spring-boot:run
