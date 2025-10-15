@@ -10,6 +10,7 @@ import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.repository.CartRepository;
 import com.ecommerce.bex.service.AuthenticationInformation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,9 @@ public class CartQueryService {
     private final CartMapper cartMapper;
     private final AuthenticationInformation authenticationInformation;
 
-    public CartResponseDTO findMyCart(){
-        return cartMapper.toResponse(findCartEntity());
-    }
-
-    public PageResponseDTO<ItemResponseDTO> findMyProducts(Pageable pageable) {
+    @Cacheable("cart-products")
+    public PageResponseDTO<ItemResponseDTO> findMyCartProducts(Pageable pageable) {
+        System.out.println("🎯 BUSCANDO PRODUTOS DO CARRINHO NO BANCO");
         Cart cart = findCartEntity();
         Page<ItemResponseDTO> items = cartRepository.findProductInCart(pageable, cart.getId())
                 .map(cartMapper::toItemResponse);
