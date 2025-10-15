@@ -1,9 +1,10 @@
 package com.ecommerce.bex.controller;
 
 import com.ecommerce.bex.command.cart.AddItemToCartCommand;
-import com.ecommerce.bex.dto.PageResponseDTO;
+import com.ecommerce.bex.command.cart.RemoveItemFromCartCommand;
 import com.ecommerce.bex.dto.CartResponseDTO;
 import com.ecommerce.bex.dto.ItemResponseDTO;
+import com.ecommerce.bex.dto.PageResponseDTO;
 import com.ecommerce.bex.service.command.CartCommandService;
 import com.ecommerce.bex.service.query.CartQueryService;
 import com.ecommerce.bex.util.AppConstants;
@@ -23,14 +24,27 @@ public class CartController {
     private final CartCommandService commandService;
     private final CartQueryService queryService;
 
+    @PostMapping
     public ResponseEntity<Void> addItem(@RequestBody @Valid AddItemToCartCommand command){
         commandService.addItemToCart(command);
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> removeItem(@RequestBody @Valid RemoveItemFromCartCommand command){
+        commandService.removeItemFromCart(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> clearCart(){
+        commandService.clearCart();
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping(value={"", "/"})
     public ResponseEntity<PageResponseDTO<ItemResponseDTO>> findAllMyCartItems(Pageable pageable){
-        return ResponseEntity.ok(queryService.findMyProducts(pageable));
+        return ResponseEntity.ok(queryService.findMyCartProducts(pageable));
     }
 
     @GetMapping(AppConstants.ALL_DATA_SEARCH_PATH)
