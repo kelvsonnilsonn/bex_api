@@ -1,11 +1,13 @@
 package com.ecommerce.bex.controller;
 
+import com.ecommerce.bex.command.order.CancelOrderCommand;
 import com.ecommerce.bex.command.order.UpdateOrderStatusCommand;
 import com.ecommerce.bex.dto.OrderResponseDTO;
 import com.ecommerce.bex.dto.PageResponseDTO;
 import com.ecommerce.bex.service.command.OrderCommandService;
 import com.ecommerce.bex.service.query.OrderQueryService;
 import com.ecommerce.bex.util.AppConstants;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,12 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> cancel(@RequestBody CancelOrderCommand command){
+        commandService.cancel(command);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping(AppConstants.ALL_DATA_SEARCH_PATH)
     @PreAuthorize(AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
     public ResponseEntity<PageResponseDTO<OrderResponseDTO>> findAll(Pageable pageable){
@@ -47,7 +55,7 @@ public class OrderController {
 
     @PutMapping(AppConstants.UPDATE_STATUS_PATH)
     @PreAuthorize(AppConstants.PRE_AUTHORIZE_SELLER_REQUISITION + " or " + AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
-    public ResponseEntity<Void> updateOrderStatus(@RequestBody UpdateOrderStatusCommand command){
+    public ResponseEntity<Void> updateOrderStatus(@RequestBody @Valid UpdateOrderStatusCommand command){
         commandService.updateOrderStatus(command);
         return ResponseEntity.ok().build();
     }
