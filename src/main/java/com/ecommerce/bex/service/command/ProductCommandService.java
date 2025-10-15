@@ -16,6 +16,7 @@ import com.ecommerce.bex.service.AuthenticationInformation;
 import com.ecommerce.bex.service.EventStoreService;
 import com.ecommerce.bex.util.AppConstants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,7 @@ public class ProductCommandService {
     private final EventStoreService eventStoreService;
     private final AuthenticationInformation authenticationInformation;
 
+    @CacheEvict(value = {"products", "products-category"}, allEntries = true)
     public Long create(CreateProductCommand command){
         ProductInformation productInformation = productMapper.toInformation(command);
         ProductCategory category = ProductCategory.fromString(command.category());
@@ -41,6 +43,7 @@ public class ProductCommandService {
         return savedProduct.getId();
     }
 
+    @CacheEvict(value = {"products", "products-category"}, allEntries = true)
     public void delete(DeleteProductCommand command){
         Product product = getProduct(command.productId());
         productRepository.delete(product);
@@ -48,6 +51,7 @@ public class ProductCommandService {
         eventStoreService.saveEvent(AppConstants.AGGREGATE_PRODUCT_TYPE, command.productId(), event);
     }
 
+    @CacheEvict(value = "products", key = "#command.productId")
     public void decreaseStock(DecreaseStockCommand command){
         Product product = getProduct(command.productId());
         Integer oldStock = product.getStock();
@@ -57,12 +61,14 @@ public class ProductCommandService {
         eventStoreService.saveEvent(AppConstants.AGGREGATE_PRODUCT_TYPE, product.getId(), event);
     }
 
+    @CacheEvict(value = "products", key = "#command.productId")
     public void updateName(UpdateProductNameCommand command){
         Product product = getProduct(command.productId());
         product.changeProductName(command.newName());
         productRepository.save(product);
     }
 
+    @CacheEvict(value = "products", key = "#command.productId")
     public void updatePrice(UpdateProductPriceCommand command){
         Product product = getProduct(command.productId());
         BigDecimal oldPrice = product.getPrice();
@@ -72,6 +78,7 @@ public class ProductCommandService {
         eventStoreService.saveEvent(AppConstants.AGGREGATE_PRODUCT_TYPE, product.getId(), event);
     }
 
+    @CacheEvict(value = "products", key = "#command.productId")
     public void updateStock(UpdateProductStockCommand command){
         Product product = getProduct(command.productId());
         Integer oldStock = product.getStock();

@@ -23,6 +23,7 @@ import com.ecommerce.bex.service.AuthenticationInformation;
 import com.ecommerce.bex.service.EventStoreService;
 import com.ecommerce.bex.util.AppConstants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,7 @@ public class OrderCommandService {
     private final AuthenticationInformation authenticationInformation;
     private final EventStoreService eventStoreService;
 
+    @CacheEvict(value = {"my-cart", "cart-products"}, allEntries = true)
     public Long create(){
         User user = getAuthenticatedUser();
         Cart cart = cartRepository.findByUserId(user.getId()).orElseThrow(UserNotFoundException::new);
@@ -65,6 +67,7 @@ public class OrderCommandService {
         return savedOrder.getId();
     }
 
+    @CacheEvict(value = {"orders", "user-orders"}, key = "#command.orderId()")
     public void cancel(CancelOrderCommand command){
         Order order = orderRepository.findById(command.orderId()).orElseThrow(OrderNotFoundException::new);
         orderRepository.delete(order);
@@ -72,6 +75,7 @@ public class OrderCommandService {
         eventStoreService.saveEvent(AppConstants.AGGREGATE_ORDER_TYPE, order.getId(), event);
     }
 
+    @CacheEvict(value = {"orders", "user-orders"}, key = "#command.orderId()")
     public void updateOrderStatus(UpdateOrderStatusCommand command){
         Order order = orderRepository.findById(command.orderId()).orElseThrow();
         OrderStatus oldStatus = order.getStatus();

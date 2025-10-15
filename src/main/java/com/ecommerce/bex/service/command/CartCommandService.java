@@ -16,6 +16,7 @@ import com.ecommerce.bex.service.AuthenticationInformation;
 import com.ecommerce.bex.service.EventStoreService;
 import com.ecommerce.bex.util.AppConstants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class CartCommandService {
     private final AuthenticationInformation authenticationInformation;
     private final EventStoreService eventStoreService;
 
+    @CacheEvict(value = {"my-cart", "cart-products"}, allEntries = true)
     public void addItemToCart(AddItemToCartCommand command){
         User user = getAuthenticatedUser();
         Cart cart = getUserCart(user.getId());
@@ -39,6 +41,7 @@ public class CartCommandService {
         eventStoreService.saveEvent(AppConstants.AGGREGATE_CART_TYPE, cart.getId(), event);
     }
 
+    @CacheEvict(value = {"my-cart", "cart-products"}, allEntries = true)
     public void removeItemFromCart(RemoveItemFromCartCommand command){
         User user = getAuthenticatedUser();
         Cart cart = getUserCart(user.getId());
@@ -48,6 +51,7 @@ public class CartCommandService {
         eventStoreService.saveEvent(AppConstants.AGGREGATE_CART_TYPE, cart.getId(), event);
     }
 
+    @CacheEvict(value = {"my-cart", "cart-products"}, allEntries = true)
     public void clearCart(){
         User user = getAuthenticatedUser();
         Cart cart = getUserCart(user.getId());
