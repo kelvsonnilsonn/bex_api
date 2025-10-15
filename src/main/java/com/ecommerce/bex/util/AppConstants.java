@@ -14,6 +14,9 @@ public class AppConstants {
 
     public static final String ID_PATH = "/{id}";
     public static final String CATEGORY_SEARCH_PATH = "/category/{productCategory}";
+    public static final String UPDATE_NAME_PATH = "/name";
+    public static final String UPDATE_PRICE_PATH = "/price";
+    public static final String UPDATE_STOCK_PATH = "/stock";
     public static final String ALL_DATA_SEARCH_PATH = "/all";
 
     public static final String EVENTS_IN_INTERVAL_PATH = "/interval";
