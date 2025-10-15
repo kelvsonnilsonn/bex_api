@@ -8,6 +8,7 @@ import com.ecommerce.bex.model.Order;
 import com.ecommerce.bex.repository.OrderRepository;
 import com.ecommerce.bex.service.AuthenticationInformation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,10 @@ public class OrderQueryService {
     private final OrderMapper orderMapper;
     private final AuthenticationInformation authenticationInformation;
 
-    public OrderResponseDTO findById(Long id){
-        Order order = orderRepository.findById(id).orElseThrow(CartNotFoundException::new);
+    @Cacheable("orders")
+    public OrderResponseDTO findById(Long orderId){
+        System.out.println("🎯 BUSCANDO PEDIDO NO BANCO: " + orderId);
+        Order order = orderRepository.findById(orderId).orElseThrow(CartNotFoundException::new);
         return orderMapper.toResponse(order);
     }
 
@@ -32,7 +35,9 @@ public class OrderQueryService {
         return PageResponseDTO.fromPage(orders);
     }
 
+    @Cacheable("user-orders")
     public PageResponseDTO<OrderResponseDTO> findMyOrder(Pageable pageable){
+        System.out.println("🎯 BUSCANDO MEUS PEDIDOS NO BANCO");
         Long userId = authenticationInformation.getAuthenticatedUser().getId();
         Page<OrderResponseDTO> orders = orderRepository.findByUserId(pageable, userId).map(orderMapper::toResponse);
         return PageResponseDTO.fromPage(orders);
