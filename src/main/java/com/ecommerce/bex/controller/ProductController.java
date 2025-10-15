@@ -1,6 +1,6 @@
 package com.ecommerce.bex.controller;
 
-import com.ecommerce.bex.command.product.CreateProductCommand;
+import com.ecommerce.bex.command.product.*;
 import com.ecommerce.bex.dto.PageResponseDTO;
 import com.ecommerce.bex.dto.ProductResponseDTO;
 import com.ecommerce.bex.service.command.ProductCommandService;
@@ -28,6 +28,34 @@ public class ProductController implements ProductAPI {
     public ResponseEntity<Long> create(@RequestBody @Valid CreateProductCommand command){
         Long productId = commandService.create(command);
         return ResponseEntity.status(HttpStatus.CREATED).body(productId);
+    }
+
+    @DeleteMapping
+    @PreAuthorize(AppConstants.PRE_AUTHORIZE_SELLER_REQUISITION + " or " + AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
+    public ResponseEntity<Void> delete(@RequestBody @Valid DeleteProductCommand command){
+        commandService.delete(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(AppConstants.UPDATE_NAME_PATH)
+    @PreAuthorize(AppConstants.PRE_AUTHORIZE_SELLER_REQUISITION + " or " + AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
+    public ResponseEntity<Void> updateName(@RequestBody @Valid UpdateProductNameCommand command){
+        commandService.updateName(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(AppConstants.UPDATE_PRICE_PATH)
+    @PreAuthorize(AppConstants.PRE_AUTHORIZE_SELLER_REQUISITION + " or " + AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
+    public ResponseEntity<Void> updatePrice(@RequestBody @Valid UpdateProductPriceCommand command){
+        commandService.updatePrice(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(AppConstants.UPDATE_STOCK_PATH)
+    @PreAuthorize(AppConstants.PRE_AUTHORIZE_SELLER_REQUISITION + " or " + AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
+    public ResponseEntity<Void> updateStock(@RequestBody @Valid UpdateProductStockCommand command){
+        commandService.updateStock(command);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = {"", "/"})
