@@ -256,7 +256,7 @@ O projeto utiliza **Spring Security** e anotações `@PreAuthorize` para gerenci
 - UserInformation: Agrega dados do usuário
 - ProductInformation: Agrega dados do produto
 - Address: Endereço completo para entrega
-- Email, CPF, Password: Objetos de valor com validação
+- Email, CPF, Password, Username: Objetos de valor com validação
 
 ### Eventos Implementados
 - Product: Created, Deleted, PriceChanged, StockUpdated
