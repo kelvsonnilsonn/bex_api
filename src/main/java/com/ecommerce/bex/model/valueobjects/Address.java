@@ -1,5 +1,6 @@
-package com.ecommerce.bex.model.valueobjects.user;
+package com.ecommerce.bex.model.valueobjects;
 
+import com.ecommerce.bex.model.valueobjects.zipcode.Zipcode;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import lombok.Getter;
@@ -27,7 +28,11 @@ public class Address {
         this.zipcode = zipcode;
     }
 
+    public void setZipcode(String zipcode){
+        this.zipcode = Zipcode.of(zipcode);
+    }
+
     public String getZipcode(){
-        return this.zipcode.getZipcode();
+        return this.zipcode.getFormattedZipcode();
     }
 }
