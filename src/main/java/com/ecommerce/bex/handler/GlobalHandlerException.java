@@ -10,8 +10,59 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalHandlerException {
 
+    @ExceptionHandler(CPFAlreadyInUseException.class)
+    public ResponseEntity<String> handleCPFInUse(CPFAlreadyInUseException e){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
+    @ExceptionHandler(EmailAlreadyInUseException.class)
+    public ResponseEntity<String> handleEmailInUse(EmailAlreadyInUseException e){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
+
+    @ExceptionHandler(InvalidCPFNumberException.class)
+    public ResponseEntity<String> handleInvalidCPF(InvalidCPFNumberException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidEmailException.class)
+    public ResponseEntity<String> handleInvalidEmail(InvalidEmailException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<String> handleInvalidPassword(InvalidPasswordException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidZipcodeNumberException.class)
+    public ResponseEntity<String> handleInvalidZipcode(InvalidZipcodeNumberException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(ShortPasswordException.class)
+    public ResponseEntity<String> handleShortPassword(ShortPasswordException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(SmallPrivilegesException.class)
+    public ResponseEntity<String> handleSmallPrivileges(SmallPrivilegesException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(ShortUsernameException.class)
+    public ResponseEntity<String> handleShortUsername(ShortUsernameException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
     @ExceptionHandler(InvalidCategoryException.class)
     public ResponseEntity<String> handleInvalidCategory(InvalidCategoryException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(EmptyCartException.class)
+    public ResponseEntity<String> handleEmptyCart(EmptyCartException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
@@ -41,17 +92,17 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<String> handleInvalidCategory(UserNotFoundException e){
+    public ResponseEntity<String> handleUserNotFound(UserNotFoundException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<String> handleInvalidCategory(UserAlreadyExistsException e){
+    public ResponseEntity<String> handleUserAlreadyExists(UserAlreadyExistsException e){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<String> handleInvalidCategory(AccessDeniedException e){
+    public ResponseEntity<String> handleAccessDenied(AccessDeniedException e){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Sem permissão");
     }
 
