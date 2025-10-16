@@ -1,12 +1,13 @@
 package com.ecommerce.bex.model;
 
 import com.ecommerce.bex.enums.UserRole;
-import com.ecommerce.bex.model.valueobjects.user.Address;
-import com.ecommerce.bex.model.valueobjects.user.UserInformation;
+import com.ecommerce.bex.model.valueobjects.Address;
+import com.ecommerce.bex.model.valueobjects.UserInformation;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -32,6 +33,18 @@ public class User {
         this.userInformation = userInformation;
         this.createdAt = LocalDateTime.now();
         this.role = UserRole.USER_ROLE;
+    }
+
+    public void changeUsername(String newName){
+        this.userInformation.changeUsername(newName);
+    }
+
+    public void changePassword(String newPassword, PasswordEncoder encoder){
+        this.userInformation.changePassword(newPassword, encoder);
+    }
+
+    public void changeEmail(String newEmail){
+        this.userInformation.changeEmail(newEmail);
     }
 
     public String getUsername() {
