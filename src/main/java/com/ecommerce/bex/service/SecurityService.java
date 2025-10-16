@@ -1,14 +1,15 @@
 package com.ecommerce.bex.service;
 
-import com.ecommerce.bex.dto.AuthResponseDTO;
 import com.ecommerce.bex.command.LoginCommand;
 import com.ecommerce.bex.command.RegisterCommand;
-import com.ecommerce.bex.exception.FailedLoginAttemptException;
-import com.ecommerce.bex.exception.UserAlreadyExistsException;
+import com.ecommerce.bex.command.user.UpdateUserPasswordCommand;
+import com.ecommerce.bex.dto.AuthResponseDTO;
+import com.ecommerce.bex.exception.*;
 import com.ecommerce.bex.mapper.UserMapper;
 import com.ecommerce.bex.model.Cart;
 import com.ecommerce.bex.model.User;
-import com.ecommerce.bex.model.valueobjects.user.*;
+import com.ecommerce.bex.model.valueobjects.UserInformation;
+import com.ecommerce.bex.model.valueobjects.Username;
 import com.ecommerce.bex.repository.CartRepository;
 import com.ecommerce.bex.repository.UserRepository;
 import com.ecommerce.bex.security.TokenService;
@@ -21,6 +22,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class SecurityService {
 
     private final UserRepository userRepository;
@@ -28,23 +30,20 @@ public class SecurityService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final TokenService tokenService;
+    private final AuthenticationInformation authenticationInformation;
 
     @Transactional(readOnly = true)
     public AuthResponseDTO login(LoginCommand dto){
-        User user = userRepository.findByUsername(dto.username()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        User user = userRepository.findByUsername(dto.username()).orElseThrow(UserNotFoundException::new);
         if(!(passwordEncoder.matches(dto.password(), user.getPassword()))){
-            throw new FailedLoginAttemptException();
+            throw new FailedLoginAttemptException("Senha incorreta");
         }
         String token = tokenService.generateToken(user);
         return new AuthResponseDTO(token, user.getUsername());
     }
 
-    @Transactional
     public AuthResponseDTO register(RegisterCommand dto){
-        Optional<User> user = userRepository.findByUsername(dto.username());
-        if(user.isPresent()){
-            throw new UserAlreadyExistsException();
-        }
+        validateUserData(dto);
         UserInformation userInformation = userMapper.toInformation(dto, passwordEncoder);
         User userToSave = new User(userInformation);
         User savedUser = userRepository.save(userToSave);
@@ -52,5 +51,26 @@ public class SecurityService {
         cartRepository.save(cart);
         String token = tokenService.generateToken(userToSave);
         return new AuthResponseDTO(token, userToSave.getUsername());
+    }
+
+    public void updateUserPassword(UpdateUserPasswordCommand command){
+        User user = authenticationInformation.getAuthenticatedUser();
+        user.changePassword(command.newPassword(), passwordEncoder);
+        userRepository.save(user);
+    }
+
+    private void validateUserData(RegisterCommand dto){
+        Optional<User> userByName = userRepository.findByUsername(dto.username());
+        if(userByName.isPresent()){
+            throw new UserAlreadyExistsException();
+        }
+        Optional<User> userByCpf = userRepository.findByCpf(dto.cpf());
+        if(userByCpf.isPresent()){
+            throw new CPFAlreadyInUseException();
+        }
+        Optional<User> userByEmail = userRepository.findByEmail(dto.email());
+        if(userByEmail.isPresent()){
+            throw new EmailAlreadyInUseException();
+        }
     }
 }
