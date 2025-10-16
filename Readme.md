@@ -115,16 +115,24 @@ A API é organizada em módulos funcionais, cada um com sua própria `Controller
 
 O tratamento de erros é centralizado no `GlobalHandlerException`, que garante respostas padronizadas e informativas, mapeando exceções específicas para seus respectivos códigos HTTP:
 
-| Exceção | Código HTTP | Descrição |
-| :--- | :--- | :--- |
-| `UserAlreadyExistsException` | `409 Conflict` | Credenciais de registro já em uso. |
-| `FailedLoginAttemptException` | `400 Bad Request` | Falha ao logar (credenciais inválidas). |
-| `AccessDeniedException` | `401 Unauthorized` | Tentativa de acesso sem as permissões necessárias. |
-| `ProductNotFoundException` | `404 Not Found` | Produto não encontrado. |
-| `OrderNotFoundException` | `404 Not Found` | Pedido não encontrado. |
-| `CartNotFoundException` | `404 Not Found` | Carrinho não encontrado. |
-| `ProductAlreadyReceivedException` | `400 Bad Request` | Status do pedido já finalizado. |
-| ... e outras | | |
+| Exceção                           | Código HTTP        | Descrição |
+|:----------------------------------|:-------------------| :--- |
+| `UserAlreadyExistsException`      | `409 Conflict`     | Credenciais de registro já em uso. |
+| `FailedLoginAttemptException`     | `400 Bad Request`  | Falha ao logar (credenciais inválidas). |
+| `AccessDeniedException`           | `401 Unauthorized` | Tentativa de acesso sem as permissões necessárias. |
+| `ProductNotFoundException`        | `404 Not Found`    | Produto não encontrado. |
+| `OrderNotFoundException`          | `404 Not Found`    | Pedido não encontrado. |
+| `CartNotFoundException`           | `404 Not Found`    | Carrinho não encontrado. |
+| `ProductAlreadyReceivedException` | `400 Bad Request`  | Status do pedido já finalizado. |
+| `InvalidCPFNumberException`       | `400 Bad Request`  | CPF com formato ou dígitos inválidos |
+| `InvalidEmailException`           | `400 Bad Request`  | Email com formato inválido |
+| `InvalidPasswordException`        | `400 Bad Request`  | Senha não atende aos requisitos de complexidade |
+| `InvalidZipcodeNumberException`   | `400 Bad Request`  | CEP com formato inválido |
+| `ShortPasswordException`          | `400 Bad Request`  | Senha muito curta (< 6 caracteres) |
+| `SmallPrivilegesException`        | `400 Bad Request`  | Tentativa de modificar usuário ADMIN |
+| `ShortUsernameException`          | `400 Bad Request`  | Nome de usuário muito curto (< 3 caracteres) |
+| `UserNotFoundException`           | `404 Not Found`    | Usuário não encontrado no sistema |
+| ... e outras                      |                    | |
 
 ---
 
@@ -178,6 +186,16 @@ O tratamento de erros é centralizado no `GlobalHandlerException`, que garante r
 | `GET` | `/aggregateType/{aggregateType}` | Busca eventos por tipo de agregado (`ORDER`, `PRODUCT`, `CART`). | `ADMIN` |
 | `GET` | `/aggregate/{aggregateId}`       | Busca eventos de uma entidade específica (Ex: pedido #123). | `ADMIN` |
 
+
+### Módulo de Usuários (`/users`)
+
+| Método | Endpoint    | Descrição                                    | Acesso |
+| :--- |:------------|:---------------------------------------------| :--- |
+| `GET` | `/`         | Lista todos os usuários (paginação)          | `ADMIN` |
+| `PUT` | `/username` | Atualiza username do usuário autenticado     | `USER`, `SELLER`, `ADMIN` |
+| `PUT` | `/email`    | Atualiza email do usuário autenticado        | `USER`, `SELLER`, `ADMIN` |
+| `PUT` | `/admin`    | Atualiza username de qualquer usuário por ID | `ADMIN` |
+
 ---
 
 ## 🔒 Segurança e Autorização
@@ -197,6 +215,33 @@ O projeto utiliza **Spring Security** e anotações `@PreAuthorize` para gerenci
 - Controle granular por método e role usando @PreAuthorize
 - Validação de permissões em tempo de execução
 - Proteção contra ataques CSRF
+- 
+### Sistema de Value Objects com Validação Avançada
+
+#### 📧 **Email Validation**
+- **Regex**: `^[a-zA-Z]+[a-zA-Z0-9._]+@[a-zA-Z]+[a-zA-Z0-9._]+\.[a-zA-Z]{2,}$`
+- **Validações**: Formato correto, caracteres permitidos, domínio válido
+
+#### 🔢 **CPF Validation**
+- **Validação completa**: Dígitos verificadores, formato, sequências inválidas
+- **Máscara automática**: Aceita formatos 000.000.000-00 ou 00000000000
+- **Algoritmo**: Cálculo dos dois dígitos verificadores
+
+#### 🔐 **Password Validation**
+- **Mínimo**: 6 caracteres
+- **Regex**: `^(?=.*\d)(?=.*[A-Z])[a-zA-Z\d!@#$%&_+*^~]+$`
+- **Requisitos**: Pelo menos 1 número, 1 letra maiúscula, caracteres especiais opcionais
+
+#### 📮 **Zipcode Validation**
+- **Formato**: 00000-000 ou 00000000
+- **Máscara**: Formatação automática para exibição
+
+#### 👤 **Username Validation**
+- **Mínimo**: 3 caracteres
+- **Validação**: Não nulo, tamanho adequado
+
+---
+
 
 ---
 
