@@ -16,7 +16,7 @@ import com.ecommerce.bex.model.Cart;
 import com.ecommerce.bex.model.CartItem;
 import com.ecommerce.bex.model.Order;
 import com.ecommerce.bex.model.User;
-import com.ecommerce.bex.model.valueobjects.user.Address;
+import com.ecommerce.bex.model.valueobjects.Address;
 import com.ecommerce.bex.repository.CartRepository;
 import com.ecommerce.bex.repository.OrderRepository;
 import com.ecommerce.bex.service.AuthenticationInformation;
