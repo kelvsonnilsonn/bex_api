@@ -88,6 +88,8 @@ src/main/java/com/ecommerce/bex/
 - **JPA/Hibernate** - ORM e persistência
 - **PostgreSQL** - Banco de dados principal
 - **Redis** - Cache em memória
+- **Docker** - Containerização e orquestração
+- **Docker Compose** - Orquestração de múltiplos containers
 - **JWT** - Tokens de autenticação
 - **MapStruct** - Mapeamento entre objetos
 - **Lombok** - Redução de boilerplate
