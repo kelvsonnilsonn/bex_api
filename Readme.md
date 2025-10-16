@@ -217,7 +217,7 @@ O projeto utiliza **Spring Security** e anotações `@PreAuthorize` para gerenci
 - Controle granular por método e role usando @PreAuthorize
 - Validação de permissões em tempo de execução
 - Proteção contra ataques CSRF
-- 
+
 ### Sistema de Value Objects com Validação Avançada
 
 #### 📧 **Email Validation**
@@ -244,21 +244,18 @@ O projeto utiliza **Spring Security** e anotações `@PreAuthorize` para gerenci
 
 ---
 
-
----
-
 ## 🎯 Modelagem de Domínio
 ### Aggregates Principais
-- User: Gerencia informações de usuário e autenticação
-- Product: Representa produtos com informações detalhada
-- Cart: Gerencia itens do carrinho de compras
-- Order: Controla o fluxo completo de pedidos
+- **User**: Gerencia informações de usuário e autenticação
+- **Product**: Representa produtos com informações detalhada
+- **Cart**: Gerencia itens do carrinho de compras
+- **Order**: Controla o fluxo completo de pedidos
 
 ### Value Objects
-- UserInformation: Agrega dados do usuário
-- ProductInformation: Agrega dados do produto
-- Address: Endereço completo para entrega
-- Email, CPF, Password, Username: Objetos de valor com validação
+- **UserInformation**: Agrega dados do usuário
+- **ProductInformation**: Agrega dados do produto
+- **Address**: Endereço completo para entrega
+- **Email, CPF, Password, Username**: Objetos de valor com validação
 
 ### Eventos Implementados
 - Product: Created, Deleted, PriceChanged, StockUpdated
