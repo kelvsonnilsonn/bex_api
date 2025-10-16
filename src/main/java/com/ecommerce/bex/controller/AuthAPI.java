@@ -1,5 +1,6 @@
 package com.ecommerce.bex.controller;
 
+import com.ecommerce.bex.command.user.UpdateUserPasswordCommand;
 import com.ecommerce.bex.dto.AuthResponseDTO;
 import com.ecommerce.bex.command.LoginCommand;
 import com.ecommerce.bex.command.RegisterCommand;
@@ -7,6 +8,7 @@ import com.ecommerce.bex.util.HttpConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +29,6 @@ public interface AuthAPI {
     @Operation(summary = "Alterar senha", description = "Altera senha de um usuário")
     @ApiResponse(responseCode = HttpConstants.CREATED, description = "Senha alterada com sucesso.")
     @ApiResponse(responseCode = HttpConstants.CONFLICT, description = HttpConstants.CONFLICT_MSG)
-    ResponseEntity<String> updatePassword(@RequestParam String password);
+    ResponseEntity<Void> updatePassword(@RequestBody @Valid UpdateUserPasswordCommand password);
 
 }
