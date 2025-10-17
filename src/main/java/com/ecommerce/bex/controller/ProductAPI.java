@@ -1,8 +1,6 @@
 package com.ecommerce.bex.controller;
 
 import com.ecommerce.bex.command.product.*;
-import com.ecommerce.bex.dto.PageResponseDTO;
-import com.ecommerce.bex.dto.ProductResponseDTO;
 import com.ecommerce.bex.util.HttpConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -10,8 +8,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "Produtos", description = "API para gestão completa de produtos do e-commerce")
 public interface ProductAPI {
@@ -53,17 +51,5 @@ public interface ProductAPI {
     @Operation(summary = "Listar todos os produtos", description = "Retorna uma lista paginada de todos os produtos cadastrados no sistema")
     @ApiResponse(responseCode = HttpConstants.OK, description = "Lista de produtos retornada com sucesso")
     @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<PageResponseDTO<ProductResponseDTO>> findAll(Pageable pageable);
-
-    @Operation(summary = "Buscar um produto por ID", description = "Retorna um produto específico com base no ID fornecido")
-    @ApiResponse(responseCode = HttpConstants.OK, description = "Produto encontrado com sucesso")
-    @ApiResponse(responseCode = HttpConstants.NOT_FOUND, description = HttpConstants.NOT_FOUND_MSG)
-    @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id);
-
-    @Operation(summary = "Buscar produtos por categoria", description = "Retorna uma lista paginada de produtos filtrados por categoria")
-    @ApiResponse(responseCode = HttpConstants.OK, description = "Produto encontrado com sucesso")
-    @ApiResponse(responseCode = HttpConstants.NOT_FOUND, description = HttpConstants.NOT_FOUND_MSG)
-    @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<PageResponseDTO<ProductResponseDTO>> findByCategory(Pageable pageable, @PathVariable String productCategory);
+    ResponseEntity<?> findProduct(Pageable pageable, @RequestParam(required = false) Long id, @RequestParam(required = false) String productCategory);
 }

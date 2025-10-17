@@ -1,8 +1,6 @@
 package com.ecommerce.bex.controller;
 
 import com.ecommerce.bex.command.product.*;
-import com.ecommerce.bex.dto.PageResponseDTO;
-import com.ecommerce.bex.dto.ProductResponseDTO;
 import com.ecommerce.bex.service.command.ProductCommandService;
 import com.ecommerce.bex.service.query.ProductQueryService;
 import com.ecommerce.bex.util.AppConstants;
@@ -59,17 +57,15 @@ public class ProductController implements ProductAPI {
     }
 
     @GetMapping(value = {"", "/"})
-    public ResponseEntity<PageResponseDTO<ProductResponseDTO>> findAll(Pageable pageable){
+    public ResponseEntity<?> findProduct(Pageable pageable,
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String productCategory){
+        if(id != null){
+            return ResponseEntity.ok(queryService.findById(id));
+        }
+        if(productCategory != null){
+            return ResponseEntity.ok(queryService.findByCategory(pageable, productCategory));
+        }
         return ResponseEntity.ok(queryService.findAll(pageable));
-    }
-
-    @GetMapping(AppConstants.ID_PATH)
-    public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id){
-        return ResponseEntity.ok(queryService.findById(id));
-    }
-
-    @GetMapping(AppConstants.CATEGORY_SEARCH_PATH)
-    public ResponseEntity<PageResponseDTO<ProductResponseDTO>> findByCategory(Pageable pageable, @PathVariable String productCategory){
-        return ResponseEntity.ok(queryService.findByCategory(pageable, productCategory));
     }
 }
