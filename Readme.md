@@ -162,8 +162,6 @@ O tratamento de erros é centralizado no `GlobalHandlerException`, que garante r
 | :--- |:----------| :--- | :--- |
 | `POST` | `/`       | Adiciona um item ao carrinho do usuário autenticado. | `USER` |
 | `GET` | `"` ou `/` | Lista todos os itens do meu carrinho. | `USER` |
-| `GET` | `/all`    | Lista todos os carrinhos de compras do sistema. | `ADMIN` |
-| `GET` | `/{id}`   | Lista os produtos de um carrinho específico (por ID do carrinho). | `ADMIN` |
 
 ### 📦 Módulo de Pedidos (`/api/v1/orders`)
 
@@ -171,8 +169,6 @@ O tratamento de erros é centralizado no `GlobalHandlerException`, que garante r
 | :--- |:------------| :--- | :--- |
 | `POST` | `/`         | Cria um novo pedido a partir do carrinho do usuário. | `USER` |
 | `GET` | `"`  ou `/`  | Lista todos os pedidos do usuário autenticado. | `USER` |
-| `GET` | `/all`      | Lista todos os pedidos registrados no sistema. | `ADMIN` |
-| `GET` | `/{id}`     | Busca um pedido específico pelo ID. | `ADMIN` |
 | `PUT` | `/upstatus` | Avança o status de um pedido para a próxima etapa. | `SELLER`, `ADMIN` |
 
 ### 📊 Módulo de Eventos (Event Sourcing) (`/api/v1/events`)
@@ -180,14 +176,7 @@ O tratamento de erros é centralizado no `GlobalHandlerException`, que garante r
 | Método | Endpoint                         | Descrição | Acesso |
 | :--- |:---------------------------------| :--- | :--- |
 | `GET` | `"` ou `/`                        | Busca eventos relacionados ao usuário autenticado. | `USER` |
-| `GET` | `/all`                           | Busca todos os eventos registrados no *Event Store*. | `ADMIN` |
 | `POST` | `/my-events-in-interval`         | Busca meus eventos em um intervalo de datas. | `USER` |
-| `POST` | `/events-in-interval`            | Busca todos os eventos em um intervalo de datas. | `ADMIN` |
-| `POST` | `/user-events-in-interval`       | Busca eventos de um usuário específico em um intervalo de datas. | `ADMIN` |
-| `GET` | `/user/{userId}`                 | Busca todos os eventos de um usuário específico. | `ADMIN` |
-| `GET` | `/aggregateType/{aggregateType}` | Busca eventos por tipo de agregado (`ORDER`, `PRODUCT`, `CART`). | `ADMIN` |
-| `GET` | `/aggregate/{aggregateId}`       | Busca eventos de uma entidade específica (Ex: pedido #123). | `ADMIN` |
-
 
 ### Módulo de Usuários (`/users`)
 
@@ -196,7 +185,25 @@ O tratamento de erros é centralizado no `GlobalHandlerException`, que garante r
 | `GET` | `/`         | Lista todos os usuários (paginação)          | `ADMIN` |
 | `PUT` | `/username` | Atualiza username do usuário autenticado     | `USER`, `SELLER`, `ADMIN` |
 | `PUT` | `/email`    | Atualiza email do usuário autenticado        | `USER`, `SELLER`, `ADMIN` |
-| `PUT` | `/admin`    | Atualiza username de qualquer usuário por ID | `ADMIN` |
+
+## Administração (`/admin`)
+
+| Módulo | Endpoint | Parâmetros | Descrição |
+| :--- | :--- | :--- | :--- |
+| **Carts** | `GET /admin/carts` | `?id=123` | Busca carrinhos - ID específico ou todos |
+| **Events** | `GET /admin/events` | `?userId=456&aggregateId=789&aggregateType=ORDER` | Busca eventos com múltiplos filtros |
+| **Orders** | `GET /admin/orders` | `?id=999` | Busca pedidos - ID específico ou todos |
+| **Users** | `GET /admin/users` | `?username=joao&email=joao@email.com` | Busca usuários por username/email |
+| **Users** | `PUT /admin/username` | - | Atualiza username de qualquer usuário |
+
+### 🔍 Sistema de Busca Inteligente
+
+Todos os endpoints administrativos seguem um **padrão de prioridade** para filtros:
+
+- **Carts**: `id` → todos
+- **Events**: `userId` → `aggregateId` → `aggregateType` → todos
+- **Orders**: `id` → todos
+- **Users**: `username` → `email` → todos
 
 ---
 
