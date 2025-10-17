@@ -11,6 +11,7 @@ public class AppConstants {
     public static final String CART_BASE_PATH = "/cart";
     public static final String ORDER_BASE_PATH = "/order";
     public static final String EVENT_BASE_PATH = "/events";
+    public static final String ADMIN_PATH = "/admin";
 
     public static final String ID_PATH = "/{id}";
     public static final String CATEGORY_SEARCH_PATH = "/category/{productCategory}";
@@ -35,8 +36,6 @@ public class AppConstants {
     public static final String CHANGE_PASSWORD_PATH = "/change-password";
     public static final String CHANGE_USERNAME_PATH = "/change-name";
     public static final String CHANGE_EMAIL_PATH = "/change-email";
-
-    public static final String ADMIN_CHANGE_NAME_PATH = "/admin/change-email";
 
     public static final String PRE_AUTHORIZE_ADMIN_REQUISITION = "hasAuthority('ADMIN_ROLE')";
     public static final String PRE_AUTHORIZE_ALL_REQUISITION = "permitAll()";
