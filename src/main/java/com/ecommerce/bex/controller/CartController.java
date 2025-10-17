@@ -2,7 +2,6 @@ package com.ecommerce.bex.controller;
 
 import com.ecommerce.bex.command.cart.AddItemToCartCommand;
 import com.ecommerce.bex.command.cart.RemoveItemFromCartCommand;
-import com.ecommerce.bex.dto.CartResponseDTO;
 import com.ecommerce.bex.dto.ItemResponseDTO;
 import com.ecommerce.bex.dto.PageResponseDTO;
 import com.ecommerce.bex.service.command.CartCommandService;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(AppConstants.CART_BASE_PATH)
 @RequiredArgsConstructor
 @PreAuthorize(AppConstants.PRE_AUTHORIZE_ALL_REQUISITION)
-public class CartController {
+public class CartController implements CartAPI{
 
     private final CartCommandService commandService;
     private final CartQueryService queryService;
@@ -45,17 +44,5 @@ public class CartController {
     @GetMapping(value={"", "/"})
     public ResponseEntity<PageResponseDTO<ItemResponseDTO>> findAllMyCartItems(Pageable pageable){
         return ResponseEntity.ok(queryService.findMyCartProducts(pageable));
-    }
-
-    @GetMapping(AppConstants.ALL_DATA_SEARCH_PATH)
-    @PreAuthorize(AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
-    public ResponseEntity<PageResponseDTO<CartResponseDTO>> findAll(Pageable pageable){
-        return ResponseEntity.ok(queryService.findAll(pageable));
-    }
-
-    @GetMapping(AppConstants.ID_PATH)
-    @PreAuthorize(AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
-    public ResponseEntity<PageResponseDTO<ItemResponseDTO>> findCartProducts(Pageable pageable, @PathVariable Long id){
-        return ResponseEntity.ok(queryService.findCartProducts(pageable, id));
     }
 }

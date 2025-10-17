@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(AppConstants.ORDER_BASE_PATH)
 @RequiredArgsConstructor
 @PreAuthorize(AppConstants.PRE_AUTHORIZE_ALL_REQUISITION)
-public class OrderController {
+public class OrderController implements OrderAPI {
 
     private final OrderCommandService commandService;
     private final OrderQueryService queryService;
@@ -36,21 +36,9 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(AppConstants.ALL_DATA_SEARCH_PATH)
-    @PreAuthorize(AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
-    public ResponseEntity<PageResponseDTO<OrderResponseDTO>> findAll(Pageable pageable){
-        return ResponseEntity.ok(queryService.findAll(pageable));
-    }
-
     @GetMapping
     public ResponseEntity<PageResponseDTO<OrderResponseDTO>> findMyOrders(Pageable pageable){
         return ResponseEntity.ok(queryService.findMyOrder(pageable));
-    }
-
-    @GetMapping(AppConstants.ID_PATH)
-    @PreAuthorize(AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
-    public ResponseEntity<OrderResponseDTO> findOrder(@PathVariable Long id){
-        return ResponseEntity.ok(queryService.findById(id));
     }
 
     @PutMapping(AppConstants.UPDATE_STATUS_PATH)

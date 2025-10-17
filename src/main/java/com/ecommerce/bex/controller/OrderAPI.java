@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "Order", description = "API para gerenciamento de pedidos")
@@ -31,21 +30,10 @@ public interface OrderAPI {
     @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
     ResponseEntity<Void> cancel(@RequestBody CancelOrderCommand command);
 
-    @Operation(summary = "Listar todos os pedidos", description = "Endpoint para listar todos os pedidos do sistema (admin)")
-    @ApiResponse(responseCode = HttpConstants.OK, description = "Pedidos listados com sucesso")
-    @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<PageResponseDTO<OrderResponseDTO>> findAll(Pageable pageable);
-
     @Operation(summary = "Listar meus pedidos", description = "Endpoint para listar todos os pedidos do usuário autenticado")
     @ApiResponse(responseCode = HttpConstants.OK, description = "Pedidos listados com sucesso")
     @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
     ResponseEntity<PageResponseDTO<OrderResponseDTO>> findMyOrders(Pageable pageable);
-
-    @Operation(summary = "Buscar pedido por ID", description = "Endpoint para buscar um pedido específico pelo ID")
-    @ApiResponse(responseCode = HttpConstants.OK, description = "Pedido encontrado com sucesso")
-    @ApiResponse(responseCode = HttpConstants.NOT_FOUND, description = HttpConstants.NOT_FOUND_MSG)
-    @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<OrderResponseDTO> findOrder(@PathVariable Long id);
 
     @Operation(summary = "Atualizar status do pedido", description = "Endpoint para avançar o status do pedido para o próximo estágio")
     @ApiResponse(responseCode = HttpConstants.OK, description = "Status do pedido atualizado com sucesso")
