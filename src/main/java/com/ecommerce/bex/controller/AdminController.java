@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(AppConstants.ADMIN_PATH)
 @PreAuthorize(AppConstants.PRE_AUTHORIZE_ADMIN_REQUISITION)
-public class AdminController {
+public class AdminController implements AdminAPI {
 
     private final CartQueryService cartQueryService;
     private final EventStoreService eventStoreService;
