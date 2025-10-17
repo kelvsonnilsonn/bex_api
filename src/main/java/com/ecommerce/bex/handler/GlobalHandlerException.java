@@ -20,6 +20,10 @@ public class GlobalHandlerException {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
+    @ExceptionHandler(UsernameAlreadyInUseException.class)
+    public ResponseEntity<String> handleUsernameInUse(UsernameAlreadyInUseException e){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
 
     @ExceptionHandler(InvalidCPFNumberException.class)
     public ResponseEntity<String> handleInvalidCPF(InvalidCPFNumberException e){
@@ -94,11 +98,6 @@ public class GlobalHandlerException {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFound(UserNotFoundException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
-
-    @ExceptionHandler(InvalidUsernameException.class)
-    public ResponseEntity<String> handleInvalidUsername(InvalidUsernameException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
