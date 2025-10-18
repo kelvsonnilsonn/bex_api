@@ -1,6 +1,8 @@
 package com.ecommerce.bex.controller;
 
 import com.ecommerce.bex.command.product.*;
+import com.ecommerce.bex.dto.PageResponseDTO;
+import com.ecommerce.bex.dto.ProductResponseDTO;
 import com.ecommerce.bex.service.command.ProductCommandService;
 import com.ecommerce.bex.service.query.ProductQueryService;
 import com.ecommerce.bex.util.AppConstants;
@@ -11,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping(AppConstants.PRODUCT_BASE_PATH)
@@ -67,5 +71,10 @@ public class ProductController implements ProductAPI {
             return ResponseEntity.ok(queryService.findByCategory(pageable, productCategory));
         }
         return ResponseEntity.ok(queryService.findAll(pageable));
+    }
+
+    @GetMapping("/popular")
+    public ResponseEntity<PageResponseDTO<ProductResponseDTO>> findPopularProducts(Pageable pageable){
+        return ResponseEntity.ok(queryService.findPopularProducts(pageable));
     }
 }
