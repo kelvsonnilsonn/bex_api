@@ -8,6 +8,7 @@ import com.ecommerce.bex.mapper.ProductMapper;
 import com.ecommerce.bex.model.Product;
 import com.ecommerce.bex.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +28,11 @@ public class ProductQueryService {
         return PageResponseDTO.fromPage(products);
     }
 
-    @Cacheable("products")
+    public PageResponseDTO<ProductResponseDTO> findPopularProducts(Pageable pageable){
+        Page<ProductResponseDTO> products = productRepository.findAllByOrderByVisitsDesc(pageable).map(productMapper::toResponse);
+        return PageResponseDTO.fromPage(products);
+    }
+
     public ProductResponseDTO findById(Long productId){
         System.out.println("🎯 BUSCANDO PRODUTO NO BANCO: " + productId);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
@@ -39,5 +44,12 @@ public class ProductQueryService {
         ProductCategory selectedCategory = ProductCategory.fromString(category);
         Page<ProductResponseDTO> products = productRepository.findByCategory(pageable, selectedCategory).map(productMapper::toResponse);
         return PageResponseDTO.fromPage(products);
+    }
+
+    @Transactional
+    public void incrementProductVisit(Long productId){
+        Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
+        product.incrementVisits();
+        productRepository.save(product);
     }
 }
