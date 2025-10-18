@@ -23,9 +23,16 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
 
+    private Long visits;
+
     public Product(ProductInformation productInformation, ProductCategory category){
         this.productInformation = productInformation;
         this.category = category;
+        this.visits = 0L;
+    }
+
+    public void incrementVisits(){
+        this.visits++;
     }
 
     public BigDecimal getPrice(){
