@@ -33,6 +33,7 @@ public class ProductQueryService {
         return PageResponseDTO.fromPage(products);
     }
 
+    @Cacheable("products")
     public ProductResponseDTO findById(Long productId){
         System.out.println("🎯 BUSCANDO PRODUTO NO BANCO: " + productId);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
