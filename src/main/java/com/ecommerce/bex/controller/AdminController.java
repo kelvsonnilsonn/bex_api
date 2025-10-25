@@ -1,5 +1,6 @@
 package com.ecommerce.bex.controller;
 
+import com.ecommerce.bex.command.user.DeleteUserCommand;
 import com.ecommerce.bex.command.user.UpdateUsernameByIdCommand;
 import com.ecommerce.bex.dto.EventIntervalDTO;
 import com.ecommerce.bex.dto.PageResponseDTO;
@@ -101,6 +102,12 @@ public class AdminController implements AdminAPI {
     @PutMapping(AppConstants.CHANGE_USERNAME_PATH)
     public ResponseEntity<Void> updateUsernameById(@RequestBody @Valid UpdateUsernameByIdCommand command){
         userCommandService.update(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping(AppConstants.USER_BASE_PATH)
+    public ResponseEntity<Void> deleteUserById(@RequestBody @Valid DeleteUserCommand command){
+        userCommandService.delete(command);
         return ResponseEntity.ok().build();
     }
 }
