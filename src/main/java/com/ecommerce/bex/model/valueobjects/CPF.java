@@ -8,13 +8,9 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor
-@Getter
 @AllArgsConstructor
-public class Email {
-    @Column(name="email", unique = true)
-    private String email;
-
-    public static Email of(String email){
-        return new Email(email);
-    }
+@Getter
+public class CPF {
+    @Column(name="cpf", unique = true)
+    private String cpf;
 }
