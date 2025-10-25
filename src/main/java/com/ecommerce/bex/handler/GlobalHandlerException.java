@@ -35,11 +35,6 @@ public class GlobalHandlerException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
-    @ExceptionHandler(InvalidZipcodeNumberException.class)
-    public ResponseEntity<String> handleInvalidZipcode(InvalidZipcodeNumberException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
-
     @ExceptionHandler(SmallPrivilegesException.class)
     public ResponseEntity<String> handleSmallPrivileges(SmallPrivilegesException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
