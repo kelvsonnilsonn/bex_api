@@ -1,11 +1,15 @@
 package com.ecommerce.bex.handler;
 
 import com.ecommerce.bex.exception.*;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Objects;
 
 @RestControllerAdvice
 public class GlobalHandlerException {
@@ -25,19 +29,10 @@ public class GlobalHandlerException {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
-    @ExceptionHandler(InvalidCPFNumberException.class)
-    public ResponseEntity<String> handleInvalidCPF(InvalidCPFNumberException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
-
-    @ExceptionHandler(InvalidEmailException.class)
-    public ResponseEntity<String> handleInvalidEmail(InvalidEmailException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
-
-    @ExceptionHandler(InvalidPasswordException.class)
-    public ResponseEntity<String> handleInvalidPassword(InvalidPasswordException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationFail(MethodArgumentNotValidException e){
+        String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
     @ExceptionHandler(InvalidZipcodeNumberException.class)
@@ -45,18 +40,8 @@ public class GlobalHandlerException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
-    @ExceptionHandler(ShortPasswordException.class)
-    public ResponseEntity<String> handleShortPassword(ShortPasswordException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
-
     @ExceptionHandler(SmallPrivilegesException.class)
     public ResponseEntity<String> handleSmallPrivileges(SmallPrivilegesException e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-    }
-
-    @ExceptionHandler(ShortUsernameException.class)
-    public ResponseEntity<String> handleShortUsername(ShortUsernameException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
