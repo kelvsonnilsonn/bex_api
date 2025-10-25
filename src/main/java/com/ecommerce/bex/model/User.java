@@ -29,6 +29,9 @@ public class User {
 
     private LocalDateTime createdAt;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
+
     public User(UserInformation userInformation){
         this.userInformation = userInformation;
         this.createdAt = LocalDateTime.now();
