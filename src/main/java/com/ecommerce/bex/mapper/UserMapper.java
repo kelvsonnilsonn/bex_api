@@ -4,7 +4,7 @@ import com.ecommerce.bex.command.RegisterCommand;
 import com.ecommerce.bex.dto.UserResponseDTO;
 import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.model.valueobjects.*;
-import com.ecommerce.bex.model.valueobjects.cpf.CPF;
+import com.ecommerce.bex.model.valueobjects.CPF;
 import com.ecommerce.bex.model.valueobjects.zipcode.Zipcode;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

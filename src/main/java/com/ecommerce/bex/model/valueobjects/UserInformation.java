@@ -1,12 +1,10 @@
 package com.ecommerce.bex.model.valueobjects;
 
-import com.ecommerce.bex.model.valueobjects.cpf.CPF;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Embeddable
