@@ -1,6 +1,5 @@
 package com.ecommerce.bex.model.valueobjects;
 
-import com.ecommerce.bex.model.valueobjects.zipcode.Zipcode;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import lombok.Getter;

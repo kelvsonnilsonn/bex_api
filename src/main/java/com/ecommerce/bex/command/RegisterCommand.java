@@ -1,9 +1,6 @@
 package com.ecommerce.bex.command;
 
-import com.ecommerce.bex.model.valueobjects.validation.ValidCPF;
-import com.ecommerce.bex.model.valueobjects.validation.ValidEmail;
-import com.ecommerce.bex.model.valueobjects.validation.ValidPassword;
-import com.ecommerce.bex.model.valueobjects.validation.ValidUsername;
+import com.ecommerce.bex.model.valueobjects.validation.*;
 import jakarta.validation.constraints.NotNull;
 
 public record RegisterCommand(
@@ -17,6 +14,6 @@ public record RegisterCommand(
         String neighborhood,
         String country,
         int number,
-        String zipcode
+        @ValidZipcode String zipcode
 ) {
 }
