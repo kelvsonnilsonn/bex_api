@@ -1,4 +1,9 @@
 package com.ecommerce.bex.command.product;
 
-public record DeleteProductCommand(Long productId, String reason) {
+import jakarta.validation.constraints.NotNull;
+
+public record DeleteProductCommand(
+        @NotNull Long productId,
+        String reason
+) {
 }

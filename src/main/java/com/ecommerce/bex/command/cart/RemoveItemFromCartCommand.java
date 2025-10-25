@@ -1,4 +1,8 @@
 package com.ecommerce.bex.command.cart;
 
-public record RemoveItemFromCartCommand(Long productId) {
+import jakarta.validation.constraints.NotNull;
+
+public record RemoveItemFromCartCommand(
+        @NotNull Long productId
+) {
 }

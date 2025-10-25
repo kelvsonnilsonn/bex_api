@@ -31,7 +31,7 @@ public class OrderController implements OrderAPI {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> cancel(@RequestBody CancelOrderCommand command){
+    public ResponseEntity<Void> cancel(@RequestBody @Valid CancelOrderCommand command){
         commandService.cancel(command);
         return ResponseEntity.ok().build();
     }

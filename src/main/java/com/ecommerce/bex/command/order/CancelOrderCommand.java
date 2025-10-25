@@ -1,4 +1,9 @@
 package com.ecommerce.bex.command.order;
 
-public record CancelOrderCommand(Long orderId, String reason) {
+import jakarta.validation.constraints.NotNull;
+
+public record CancelOrderCommand(
+        @NotNull Long orderId,
+        String reason
+) {
 }

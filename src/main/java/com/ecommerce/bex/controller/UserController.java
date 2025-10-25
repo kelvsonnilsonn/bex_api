@@ -4,6 +4,7 @@ import com.ecommerce.bex.command.user.UpdateEmailCommand;
 import com.ecommerce.bex.command.user.UpdateUsernameCommand;
 import com.ecommerce.bex.service.command.UserCommandService;
 import com.ecommerce.bex.util.AppConstants;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,13 +22,13 @@ public class UserController implements UserAPI {
     private final UserCommandService userCommandService;
 
     @PutMapping(AppConstants.CHANGE_USERNAME_PATH)
-    public ResponseEntity<Void> updateUsername(@RequestBody UpdateUsernameCommand command){
+    public ResponseEntity<Void> updateUsername(@RequestBody @Valid UpdateUsernameCommand command){
         userCommandService.update(command);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping(AppConstants.CHANGE_EMAIL_PATH)
-    public  ResponseEntity<Void> updateEmail(@RequestBody UpdateEmailCommand command){
+    public  ResponseEntity<Void> updateEmail(@RequestBody @Valid UpdateEmailCommand command){
         userCommandService.update(command);
         return ResponseEntity.ok().build();
     }

@@ -1,4 +1,8 @@
 package com.ecommerce.bex.command.order;
 
-public record UpdateOrderStatusCommand(Long orderId) {
+import jakarta.validation.constraints.NotNull;
+
+public record UpdateOrderStatusCommand(
+        @NotNull Long orderId
+) {
 }

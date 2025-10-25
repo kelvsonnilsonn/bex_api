@@ -1,4 +1,10 @@
 package com.ecommerce.bex.command.product;
 
-public record UpdateProductStockCommand(Long productId, Integer newStock) {
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+public record UpdateProductStockCommand(
+        @NotNull Long productId,
+        @NotNull @Positive Integer newStock
+) {
 }
