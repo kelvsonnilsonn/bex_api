@@ -1,9 +1,6 @@
 package com.ecommerce.bex.service.command;
 
-import com.ecommerce.bex.command.user.DeleteUserCommand;
-import com.ecommerce.bex.command.user.UpdateEmailCommand;
-import com.ecommerce.bex.command.user.UpdateUsernameByIdCommand;
-import com.ecommerce.bex.command.user.UpdateUsernameCommand;
+import com.ecommerce.bex.command.user.*;
 import com.ecommerce.bex.enums.UserRole;
 import com.ecommerce.bex.exception.*;
 import com.ecommerce.bex.model.User;
@@ -22,10 +19,18 @@ public class UserCommandService {
     private final UserRepository userRepository;
     private final AuthenticationInformation authenticationInformation;
 
+
     @CacheEvict(value="users", key="#command.userId")
     public void delete(DeleteUserCommand command){
         User user = userRepository.findById(command.userId()).orElseThrow(UserNotFoundException::new);
         userRepository.delete(user);
+    }
+
+    @CacheEvict(value = "users", key = "#user.id")
+    public void update(UpdateUserAddressCommand command){
+        User user = authenticationInformation.getAuthenticatedUser();
+        user.setAddress(command);
+        userRepository.save(user);
     }
 
     @CacheEvict(value="users", key="#user.id")

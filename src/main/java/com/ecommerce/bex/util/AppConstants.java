@@ -48,5 +48,6 @@ public class AppConstants {
     public static final String USERNAME_NOT_NULL_MESSAGE = "O username é obrigatório";
     public static final String EMAIL_NOT_NULL_MESSAGE = "O Email é obrigatório";
     public static final String PASSWORD_NOT_NULL_MESSAGE = "A Senha é obrigatória";
+    public static final String POSITIVE_ADDRESS_NUMBER_MESSAGE = "O número da residência deve ser positivo maior que zero.";
 
 }
