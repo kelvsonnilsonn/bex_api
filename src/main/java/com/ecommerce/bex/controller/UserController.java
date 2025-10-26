@@ -1,6 +1,7 @@
 package com.ecommerce.bex.controller;
 
 import com.ecommerce.bex.command.user.UpdateEmailCommand;
+import com.ecommerce.bex.command.user.UpdateUserAddressCommand;
 import com.ecommerce.bex.command.user.UpdateUsernameCommand;
 import com.ecommerce.bex.service.command.UserCommandService;
 import com.ecommerce.bex.util.AppConstants;
@@ -28,7 +29,13 @@ public class UserController implements UserAPI {
     }
 
     @PutMapping(AppConstants.CHANGE_EMAIL_PATH)
-    public  ResponseEntity<Void> updateEmail(@RequestBody @Valid UpdateEmailCommand command){
+    public ResponseEntity<Void> updateEmail(@RequestBody @Valid UpdateEmailCommand command){
+        userCommandService.update(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/change-address")
+    public ResponseEntity<Void> updateAddress(@RequestBody @Valid UpdateUserAddressCommand command){
         userCommandService.update(command);
         return ResponseEntity.ok().build();
     }
