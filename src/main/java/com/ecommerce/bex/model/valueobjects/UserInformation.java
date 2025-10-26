@@ -1,7 +1,9 @@
 package com.ecommerce.bex.model.valueobjects;
 
+import com.ecommerce.bex.command.user.UpdateUserAddressCommand;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,4 +53,33 @@ public class UserInformation {
     public String getPassword(){
         return password.getPassword();
     }
+
+    public void setAddress(UpdateUserAddressCommand command){
+        this.address.setAddress(command);
+    }
+
+    public String getAddressStreet(){
+        return this.address.getStreet();
+    }
+
+    public String getAddressCountry(){
+        return this.address.getCountry();
+    }
+
+    public String getAddressNeighborhood(){
+        return this.address.getNeighborhood();
+    }
+
+    public String getAddressCity(){
+        return this.address.getCity();
+    }
+
+    public int getAddressNumber(){
+        return this.address.getNumber();
+    }
+
+    public String getAddressZipcode(){
+        return this.address.getZipcode();
+    }
+
 }

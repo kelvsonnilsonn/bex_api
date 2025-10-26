@@ -1,5 +1,6 @@
 package com.ecommerce.bex.model;
 
+import com.ecommerce.bex.command.user.UpdateUserAddressCommand;
 import com.ecommerce.bex.enums.UserRole;
 import com.ecommerce.bex.model.valueobjects.Address;
 import com.ecommerce.bex.model.valueobjects.UserInformation;
@@ -44,6 +45,10 @@ public class User {
 
     public void changePassword(String newPassword, PasswordEncoder encoder){
         this.userInformation.changePassword(newPassword, encoder);
+    }
+
+    public void setAddress(UpdateUserAddressCommand command) {
+        this.userInformation.setAddress(command);
     }
 
     public void changeEmail(String newEmail){
