@@ -180,11 +180,13 @@ O tratamento de erros é centralizado no `GlobalHandlerException`, que garante r
 
 ### Módulo de Usuários (`/users`)
 
-| Método | Endpoint    | Descrição                                    | Acesso |
-| :--- |:------------|:---------------------------------------------| :--- |
-| `GET` | `/`         | Lista todos os usuários (paginação)          | `ADMIN` |
-| `PUT` | `/username` | Atualiza username do usuário autenticado     | `USER`, `SELLER`, `ADMIN` |
-| `PUT` | `/email`    | Atualiza email do usuário autenticado        | `USER`, `SELLER`, `ADMIN` |
+| Método | Endpoint           | Descrição                                | Acesso |
+| :--- |:-------------------|:-----------------------------------------| :--- |
+| `GET` | `/`                | Lista todos os usuários (paginação)      | `ADMIN` |
+| `PUT` | `/change-username` | Atualiza username do usuário autenticado | `USER`, `SELLER`, `ADMIN` |
+| `PUT` | `/change-email`    | Atualiza email do usuário autenticado    | `USER`, `SELLER`, `ADMIN` |
+| `PUT` | `/change-address`  | Atualiza endereço do usuário autenticado | `USER`, `SELLER`, `ADMIN` |
+
 
 ## Administração (`/admin`)
 
