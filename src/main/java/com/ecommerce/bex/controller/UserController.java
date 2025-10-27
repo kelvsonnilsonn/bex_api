@@ -34,7 +34,7 @@ public class UserController implements UserAPI {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/change-address")
+    @PutMapping(AppConstants.CHANGE_ADDRESS_PATH)
     public ResponseEntity<Void> updateAddress(@RequestBody @Valid UpdateUserAddressCommand command){
         userCommandService.update(command);
         return ResponseEntity.ok().build();
