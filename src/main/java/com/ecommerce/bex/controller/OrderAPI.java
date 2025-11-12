@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "Order", description = "API para gerenciamento de pedidos")
 public interface OrderAPI {
@@ -21,7 +22,7 @@ public interface OrderAPI {
     @ApiResponse(responseCode = HttpConstants.BAD_REQUEST, description = HttpConstants.BAD_REQUEST_MSG)
     @ApiResponse(responseCode = HttpConstants.NOT_FOUND, description = HttpConstants.NOT_FOUND_MSG)
     @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<Long> order();
+    ResponseEntity<Long> order(@RequestParam(required = false) String coupon);
 
     @Operation(summary = "Cancelar pedido", description = "Endpoint para cancelar um pedido existente")
     @ApiResponse(responseCode = HttpConstants.OK, description = "Pedido cancelado com sucesso")
@@ -33,7 +34,7 @@ public interface OrderAPI {
     @Operation(summary = "Listar meus pedidos", description = "Endpoint para listar todos os pedidos do usuário autenticado")
     @ApiResponse(responseCode = HttpConstants.OK, description = "Pedidos listados com sucesso")
     @ApiResponse(responseCode = HttpConstants.SERVER_ERROR, description = HttpConstants.INTERN_SERVER_ERROR_MSG)
-    ResponseEntity<PageResponseDTO<OrderResponseDTO>> findMyOrders(Pageable pageable);
+    ResponseEntity<?> findMyOrders(Pageable pageable, @RequestParam(required = false) Long id);
 
     @Operation(summary = "Atualizar status do pedido", description = "Endpoint para avançar o status do pedido para o próximo estágio")
     @ApiResponse(responseCode = HttpConstants.OK, description = "Status do pedido atualizado com sucesso")
