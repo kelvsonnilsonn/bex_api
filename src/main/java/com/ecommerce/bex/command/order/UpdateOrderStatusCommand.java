@@ -1,8 +1,9 @@
 package com.ecommerce.bex.command.order;
 
+import com.ecommerce.bex.util.AppConstants;
 import jakarta.validation.constraints.NotNull;
 
 public record UpdateOrderStatusCommand(
-        @NotNull(message = "O ID do pedido é obrigatório") Long orderId
+        @NotNull(message = AppConstants.ID_NOT_NULL_MESSAGE) Long orderId
 ) {
 }

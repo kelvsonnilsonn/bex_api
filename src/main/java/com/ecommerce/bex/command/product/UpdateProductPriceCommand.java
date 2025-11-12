@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public record UpdateProductPriceCommand(
-        @NotNull(message = AppConstants.PRODUCT_ID_NN_MESSAGE) Long productId,
+        @NotNull(message = AppConstants.ID_NOT_NULL_MESSAGE) Long productId,
         @NotNull(message = "Você precisa inserir o novo preço") @Positive (message = AppConstants.PRODUCT_PRICE_POSITIVE_MESSAGE)
         BigDecimal newPrice
 ) {

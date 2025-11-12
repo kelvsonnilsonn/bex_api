@@ -1,6 +1,6 @@
 package com.ecommerce.bex.command.user;
 
-import com.ecommerce.bex.model.valueobjects.validation.ValidZipcode;
+import com.ecommerce.bex.validation.ValidZipcode;
 import com.ecommerce.bex.util.AppConstants;
 import jakarta.validation.constraints.Positive;
 
