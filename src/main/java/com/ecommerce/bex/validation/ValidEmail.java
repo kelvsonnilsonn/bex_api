@@ -1,4 +1,4 @@
-package com.ecommerce.bex.model.valueobjects.validation;
+package com.ecommerce.bex.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
