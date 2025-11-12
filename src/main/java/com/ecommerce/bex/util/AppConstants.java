@@ -43,16 +43,15 @@ public class AppConstants {
     public static final String AGGREGATE_ORDER_TYPE = "ORDER";
     public static final String AGGREGATE_CART_TYPE = "CART";
     public static final String AGGREGATE_PRODUCT_TYPE = "PRODUCT";
+    public static final String AGGREGATE_COUPON_TYPE = "COUPON";
 
     public static final String ID_NOT_NULL_MESSAGE = "O ID é obrigatório";
 
     public static final String PRODUCT_PRICE_POSITIVE_MESSAGE = "O preço do produto deve ser maior que 0!";
     public static final String PRODUCT_STOCK_POSITIVE_MESSAGE = "Informar a quantidade do produto no estoque é obrigatório";
 
-
     public static final String USERNAME_NOT_NULL_MESSAGE = "O username é obrigatório";
     public static final String EMAIL_NOT_NULL_MESSAGE = "O Email é obrigatório";
     public static final String PASSWORD_NOT_NULL_MESSAGE = "A Senha é obrigatória";
     public static final String POSITIVE_ADDRESS_NUMBER_MESSAGE = "O número da residência deve ser positivo maior que zero.";
-
 }
