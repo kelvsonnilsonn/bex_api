@@ -1,7 +1,18 @@
 package com.ecommerce.bex.handler;
 
 import com.ecommerce.bex.exception.*;
-import jakarta.validation.ConstraintViolationException;
+import com.ecommerce.bex.exception.cart.EmptyCartException;
+import com.ecommerce.bex.exception.coupon.*;
+import com.ecommerce.bex.exception.cart.CartNotFoundException;
+import com.ecommerce.bex.exception.order.OrderNotFoundException;
+import com.ecommerce.bex.exception.product.InvalidCategoryException;
+import com.ecommerce.bex.exception.product.ProductAlreadyReceivedException;
+import com.ecommerce.bex.exception.product.ProductNotFoundException;
+import com.ecommerce.bex.exception.user.UserNotFoundException;
+import com.ecommerce.bex.exception.product.ProductNotInCartException;
+import com.ecommerce.bex.exception.user.CPFAlreadyInUseException;
+import com.ecommerce.bex.exception.user.EmailAlreadyInUseException;
+import com.ecommerce.bex.exception.user.UsernameAlreadyInUseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -19,6 +30,17 @@ public class GlobalHandlerException {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
+    @ExceptionHandler(CouponNotFoundException.class)
+    public ResponseEntity<String> handleCouponNotFound(CouponNotFoundException e){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(CouponLimitException.class)
+    public ResponseEntity<String> handleCouponLimit(CouponLimitException e){
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+    }
+
+
     @ExceptionHandler(EmailAlreadyInUseException.class)
     public ResponseEntity<String> handleEmailInUse(EmailAlreadyInUseException e){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -35,8 +57,23 @@ public class GlobalHandlerException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
-    @ExceptionHandler(SmallPrivilegesException.class)
-    public ResponseEntity<String> handleSmallPrivileges(SmallPrivilegesException e){
+    @ExceptionHandler(CouponAlreadyExistsException.class)
+    public ResponseEntity<String> handleCouponExists(CouponAlreadyExistsException e){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+    }
+
+    @ExceptionHandler(UnauthorizedCommandException.class)
+    public ResponseEntity<String> handleSmallPrivileges(UnauthorizedCommandException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(ExpiredCouponException.class)
+    public ResponseEntity<String> handleCouponExpired(ExpiredCouponException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidCouponTypeException.class)
+    public ResponseEntity<String> handleCouponType(InvalidCouponTypeException e){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
@@ -79,12 +116,6 @@ public class GlobalHandlerException {
     public ResponseEntity<String> handleUserNotFound(UserNotFoundException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
-
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<String> handleUserAlreadyExists(UserAlreadyExistsException e){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-    }
-
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> handleAccessDenied(AccessDeniedException e){
