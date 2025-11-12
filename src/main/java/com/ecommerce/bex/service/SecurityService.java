@@ -5,11 +5,14 @@ import com.ecommerce.bex.command.RegisterCommand;
 import com.ecommerce.bex.command.user.UpdateUserPasswordCommand;
 import com.ecommerce.bex.dto.AuthResponseDTO;
 import com.ecommerce.bex.exception.*;
+import com.ecommerce.bex.exception.user.UserNotFoundException;
+import com.ecommerce.bex.exception.user.CPFAlreadyInUseException;
+import com.ecommerce.bex.exception.user.EmailAlreadyInUseException;
+import com.ecommerce.bex.exception.user.UsernameAlreadyInUseException;
 import com.ecommerce.bex.mapper.UserMapper;
 import com.ecommerce.bex.model.Cart;
 import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.model.valueobjects.UserInformation;
-import com.ecommerce.bex.model.valueobjects.Username;
 import com.ecommerce.bex.repository.CartRepository;
 import com.ecommerce.bex.repository.UserRepository;
 import com.ecommerce.bex.security.TokenService;
@@ -62,7 +65,7 @@ public class SecurityService {
     private void validateUserData(RegisterCommand dto){
         Optional<User> userByName = userRepository.findByUsername(dto.username());
         if(userByName.isPresent()){
-            throw new UserAlreadyExistsException();
+            throw new UsernameAlreadyInUseException();
         }
         Optional<User> userByCpf = userRepository.findByCpf(dto.cpf());
         if(userByCpf.isPresent()){

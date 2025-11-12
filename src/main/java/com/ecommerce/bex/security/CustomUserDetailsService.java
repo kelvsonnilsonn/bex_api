@@ -1,6 +1,6 @@
 package com.ecommerce.bex.security;
 
-import com.ecommerce.bex.exception.UserNotFoundException;
+import com.ecommerce.bex.exception.user.UserNotFoundException;
 import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

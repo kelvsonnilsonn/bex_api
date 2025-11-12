@@ -6,7 +6,7 @@ import com.ecommerce.bex.event.product.ProductCreatedEvent;
 import com.ecommerce.bex.event.product.ProductDeletedEvent;
 import com.ecommerce.bex.event.product.ProductPriceChangedEvent;
 import com.ecommerce.bex.event.product.ProductStockUpdatedEvent;
-import com.ecommerce.bex.exception.ProductNotFoundException;
+import com.ecommerce.bex.exception.product.ProductNotFoundException;
 import com.ecommerce.bex.mapper.ProductMapper;
 import com.ecommerce.bex.model.Product;
 import com.ecommerce.bex.model.ProductInformation;

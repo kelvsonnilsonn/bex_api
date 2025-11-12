@@ -3,7 +3,7 @@ package com.ecommerce.bex.service.query;
 import com.ecommerce.bex.dto.PageResponseDTO;
 import com.ecommerce.bex.dto.CartResponseDTO;
 import com.ecommerce.bex.dto.ItemResponseDTO;
-import com.ecommerce.bex.exception.UserNotFoundException;
+import com.ecommerce.bex.exception.user.UserNotFoundException;
 import com.ecommerce.bex.mapper.CartMapper;
 import com.ecommerce.bex.model.Cart;
 import com.ecommerce.bex.model.User;

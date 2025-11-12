@@ -2,7 +2,7 @@ package com.ecommerce.bex.service.query;
 
 import com.ecommerce.bex.dto.PageResponseDTO;
 import com.ecommerce.bex.dto.UserResponseDTO;
-import com.ecommerce.bex.exception.UserNotFoundException;
+import com.ecommerce.bex.exception.user.UserNotFoundException;
 import com.ecommerce.bex.mapper.UserMapper;
 import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.repository.UserRepository;

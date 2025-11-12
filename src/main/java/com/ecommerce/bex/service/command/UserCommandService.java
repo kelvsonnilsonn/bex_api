@@ -3,6 +3,9 @@ package com.ecommerce.bex.service.command;
 import com.ecommerce.bex.command.user.*;
 import com.ecommerce.bex.enums.UserRole;
 import com.ecommerce.bex.exception.*;
+import com.ecommerce.bex.exception.user.UserNotFoundException;
+import com.ecommerce.bex.exception.user.EmailAlreadyInUseException;
+import com.ecommerce.bex.exception.user.UsernameAlreadyInUseException;
 import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.repository.UserRepository;
 import com.ecommerce.bex.service.AuthenticationInformation;
@@ -18,7 +21,6 @@ public class UserCommandService {
 
     private final UserRepository userRepository;
     private final AuthenticationInformation authenticationInformation;
-
 
     @CacheEvict(value="users", key="#command.userId")
     public void delete(DeleteUserCommand command){
@@ -45,7 +47,7 @@ public class UserCommandService {
     public void update(UpdateUsernameByIdCommand command){
         User user = userRepository.findById(command.id()).orElseThrow(UserNotFoundException::new);
         if(user.getRole().equals(UserRole.ADMIN_ROLE)){
-            throw new SmallPrivilegesException();
+            throw new UnauthorizedCommandException();
         }
         validateUsername(command.newName(), user.getId());
         user.changeUsername(command.newName());

@@ -1,6 +1,6 @@
 package com.ecommerce.bex.enums;
 
-import com.ecommerce.bex.exception.ProductAlreadyReceivedException;
+import com.ecommerce.bex.exception.product.ProductAlreadyReceivedException;
 import com.ecommerce.bex.model.Order;
 
 public enum OrderStatus {

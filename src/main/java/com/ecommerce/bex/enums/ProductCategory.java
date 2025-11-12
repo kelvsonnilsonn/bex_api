@@ -1,6 +1,6 @@
 package com.ecommerce.bex.enums;
 
-import com.ecommerce.bex.exception.InvalidCategoryException;
+import com.ecommerce.bex.exception.product.InvalidCategoryException;
 
 public enum ProductCategory {
     ELETRONICOS,

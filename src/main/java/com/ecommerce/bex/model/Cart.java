@@ -1,6 +1,6 @@
 package com.ecommerce.bex.model;
 
-import com.ecommerce.bex.exception.ProductNotInCartException;
+import com.ecommerce.bex.exception.product.ProductNotInCartException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
