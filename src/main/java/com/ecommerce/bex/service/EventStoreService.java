@@ -5,7 +5,7 @@ import com.ecommerce.bex.dto.PageResponseDTO;
 import com.ecommerce.bex.dto.UserEventsIntervalDTO;
 import com.ecommerce.bex.event.EventStore;
 import com.ecommerce.bex.exception.InvalidDateIntervalException;
-import com.ecommerce.bex.exception.UserNotFoundException;
+import com.ecommerce.bex.exception.user.UserNotFoundException;
 import com.ecommerce.bex.repository.EventStoreRepository;
 import com.ecommerce.bex.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
