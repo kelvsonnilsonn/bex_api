@@ -12,6 +12,10 @@ public class AppConstants {
     public static final String ORDER_BASE_PATH = "/order";
     public static final String EVENT_BASE_PATH = "/events";
     public static final String ADMIN_PATH = "/admin";
+    public static final String COUPON_PATH = "/coupon";
+
+    public static final String UPDATE_COUPON_LIMIT_PATH = "/coupon/edit-limit";
+    public static final String UPDATE_COUPON_EXPIRE_PATH = "/coupon/edit-expire";
 
     public static final String UPDATE_NAME_PATH = "/name";
     public static final String UPDATE_PRICE_PATH = "/price";
@@ -40,11 +44,11 @@ public class AppConstants {
     public static final String AGGREGATE_CART_TYPE = "CART";
     public static final String AGGREGATE_PRODUCT_TYPE = "PRODUCT";
 
-    public static final String PRODUCT_ID_NN_MESSAGE = "O ID do produto é obrigatório";
+    public static final String ID_NOT_NULL_MESSAGE = "O ID é obrigatório";
+
     public static final String PRODUCT_PRICE_POSITIVE_MESSAGE = "O preço do produto deve ser maior que 0!";
     public static final String PRODUCT_STOCK_POSITIVE_MESSAGE = "Informar a quantidade do produto no estoque é obrigatório";
 
-    public static final String USER_ID_NN_MESSAGE = "O ID do usuário é obrigatório";
 
     public static final String USERNAME_NOT_NULL_MESSAGE = "O username é obrigatório";
     public static final String EMAIL_NOT_NULL_MESSAGE = "O Email é obrigatório";
