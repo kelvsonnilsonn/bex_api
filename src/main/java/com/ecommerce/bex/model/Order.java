@@ -24,6 +24,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @OneToOne
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
+
     private Long userId;
 
     private String zipcode;
