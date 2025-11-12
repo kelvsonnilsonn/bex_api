@@ -1,4 +1,4 @@
-package com.ecommerce.bex.exception;
+package com.ecommerce.bex.exception.cart;
 
 public class EmptyCartException extends RuntimeException {
     public EmptyCartException() {super("O seu carrinho está vazio");}

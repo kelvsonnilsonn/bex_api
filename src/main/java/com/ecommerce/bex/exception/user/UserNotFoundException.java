@@ -1,4 +1,4 @@
-package com.ecommerce.bex.exception;
+package com.ecommerce.bex.exception.user;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException() { super("Usuário não encontrado"); }

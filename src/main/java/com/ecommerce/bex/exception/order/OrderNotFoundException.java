@@ -1,4 +1,4 @@
-package com.ecommerce.bex.exception;
+package com.ecommerce.bex.exception.order;
 
 public class OrderNotFoundException extends RuntimeException {
     public OrderNotFoundException() { super("O pedido não foi encontrado"); }

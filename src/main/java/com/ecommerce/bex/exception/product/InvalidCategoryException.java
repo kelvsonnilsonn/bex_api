@@ -1,4 +1,4 @@
-package com.ecommerce.bex.exception;
+package com.ecommerce.bex.exception.product;
 
 public class InvalidCategoryException extends RuntimeException {
     public InvalidCategoryException() { super("A categoria escolhida não existe"); }

@@ -1,4 +1,4 @@
-package com.ecommerce.bex.exception;
+package com.ecommerce.bex.exception.cart;
 
 public class CartNotFoundException extends RuntimeException {
     public CartNotFoundException() { super("O carrinho não foi encontrado"); }

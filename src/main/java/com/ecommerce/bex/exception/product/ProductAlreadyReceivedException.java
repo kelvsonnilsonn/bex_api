@@ -1,4 +1,4 @@
-package com.ecommerce.bex.exception;
+package com.ecommerce.bex.exception.product;
 
 public class ProductAlreadyReceivedException extends RuntimeException {
     public ProductAlreadyReceivedException() { super("O produto já foi entregue"); }
