@@ -6,7 +6,6 @@ import com.ecommerce.bex.model.User;
 import com.ecommerce.bex.model.valueobjects.*;
 import com.ecommerce.bex.model.valueobjects.CPF;
 import com.ecommerce.bex.model.valueobjects.Zipcode;
-import com.ecommerce.bex.model.valueobjects.validation.ValidZipcode;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.security.crypto.password.PasswordEncoder;
