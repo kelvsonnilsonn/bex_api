@@ -1,7 +1,7 @@
 package com.ecommerce.bex.command;
 
-import com.ecommerce.bex.model.valueobjects.validation.*;
 import com.ecommerce.bex.util.AppConstants;
+import com.ecommerce.bex.validation.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
