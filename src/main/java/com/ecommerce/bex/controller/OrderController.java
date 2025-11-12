@@ -25,8 +25,8 @@ public class OrderController implements OrderAPI {
     private final OrderQueryService queryService;
 
     @PostMapping
-    public ResponseEntity<Long> order(){
-        Long orderId = commandService.create();
+    public ResponseEntity<Long> order(@RequestParam(required = false) String coupon){
+        Long orderId = commandService.create(coupon);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
     }
 
@@ -37,7 +37,10 @@ public class OrderController implements OrderAPI {
     }
 
     @GetMapping
-    public ResponseEntity<PageResponseDTO<OrderResponseDTO>> findMyOrders(Pageable pageable){
+    public ResponseEntity<?> findMyOrders(Pageable pageable, @RequestParam(required = false) Long id){
+        if(id != null){
+            return ResponseEntity.ok(queryService.findById(id));
+        }
         return ResponseEntity.ok(queryService.findMyOrder(pageable));
     }
 

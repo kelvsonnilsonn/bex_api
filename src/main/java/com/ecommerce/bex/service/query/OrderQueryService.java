@@ -2,7 +2,7 @@ package com.ecommerce.bex.service.query;
 
 import com.ecommerce.bex.dto.OrderResponseDTO;
 import com.ecommerce.bex.dto.PageResponseDTO;
-import com.ecommerce.bex.exception.CartNotFoundException;
+import com.ecommerce.bex.exception.cart.CartNotFoundException;
 import com.ecommerce.bex.mapper.OrderMapper;
 import com.ecommerce.bex.model.Order;
 import com.ecommerce.bex.repository.OrderRepository;
