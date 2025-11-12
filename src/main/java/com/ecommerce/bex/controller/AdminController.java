@@ -1,20 +1,28 @@
 package com.ecommerce.bex.controller;
 
+import com.ecommerce.bex.command.coupon.CreateCouponCommand;
+import com.ecommerce.bex.command.coupon.DeleteCouponCommand;
+import com.ecommerce.bex.command.coupon.UpdateCouponExpireDateCommand;
+import com.ecommerce.bex.command.coupon.UpdateCouponLimitCommand;
 import com.ecommerce.bex.command.user.DeleteUserCommand;
 import com.ecommerce.bex.command.user.UpdateUsernameByIdCommand;
+import com.ecommerce.bex.dto.CouponResponseDTO;
 import com.ecommerce.bex.dto.EventIntervalDTO;
 import com.ecommerce.bex.dto.PageResponseDTO;
 import com.ecommerce.bex.dto.UserEventsIntervalDTO;
 import com.ecommerce.bex.event.EventStore;
 import com.ecommerce.bex.service.EventStoreService;
+import com.ecommerce.bex.service.command.CouponCommandService;
 import com.ecommerce.bex.service.command.UserCommandService;
 import com.ecommerce.bex.service.query.CartQueryService;
+import com.ecommerce.bex.service.query.CouponQueryService;
 import com.ecommerce.bex.service.query.OrderQueryService;
 import com.ecommerce.bex.service.query.UserQueryService;
 import com.ecommerce.bex.util.AppConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +37,10 @@ public class AdminController implements AdminAPI {
     private final EventStoreService eventStoreService;
     private final OrderQueryService orderQueryService;
     private final UserQueryService userQueryService;
-
     private final UserCommandService userCommandService;
+    private final CouponCommandService couponCommandService;
+    private final CouponQueryService couponQueryService;
+
 
     // SEÇÃO PARA CARTS
 
@@ -110,4 +120,35 @@ public class AdminController implements AdminAPI {
         userCommandService.delete(command);
         return ResponseEntity.ok().build();
     }
+
+    // SEÇÃO DE CUPONS
+
+    @GetMapping(AppConstants.COUPON_PATH)
+    public ResponseEntity<?> findAllCoupons(Pageable pageable){
+        return ResponseEntity.ok(couponQueryService.findAll(pageable));
+    }
+
+    @PostMapping(AppConstants.COUPON_PATH)
+    public ResponseEntity<Long> createCoupon(@RequestBody @Valid CreateCouponCommand command){
+        return ResponseEntity.status(HttpStatus.CREATED).body(couponCommandService.create(command));
+    }
+
+    @DeleteMapping(AppConstants.COUPON_PATH)
+    public ResponseEntity<Void> deleteCoupon(@RequestBody @Valid DeleteCouponCommand command){
+        couponCommandService.delete(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(AppConstants.UPDATE_COUPON_LIMIT_PATH)
+    public ResponseEntity<Void> updateLimit(@RequestBody @Valid UpdateCouponLimitCommand command){
+        couponCommandService.update(command);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(AppConstants.UPDATE_COUPON_EXPIRE_PATH)
+    public ResponseEntity<Void> updateExpire(@RequestBody @Valid UpdateCouponExpireDateCommand command){
+        couponCommandService.update(command);
+        return ResponseEntity.ok().build();
+    }
+
 }
